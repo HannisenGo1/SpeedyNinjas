@@ -1,0 +1,122 @@
+[
+      {
+        "name": "Rose",
+        "price": 15.99,
+        "image": "https://example.com/rose.jpg",
+        "amountInStock": 30
+      },
+      {
+        "name": "Tulip",
+        "price": 12.49,
+        "image": "https://example.com/tulip.jpg",
+        "amountInStock": 50
+      },
+      {
+        "name": "Daisy",
+        "price": 8.99,
+        "image": "https://example.com/daisy.jpg",
+        "amountInStock": 100
+      },
+      {
+        "name": "Lily",
+        "price": 14.25,
+        "image": "https://example.com/lily.jpg",
+        "amountInStock": 25
+      },
+      {
+        "name": "Orchid",
+        "price": 22.50,
+        "image": "https://example.com/orchid.jpg",
+        "amountInStock": 15
+      },
+      {
+        "name": "Sunflower",
+        "price": 10.00,
+        "image": "https://example.com/sunflower.jpg",
+        "amountInStock": 75
+      },
+      {
+        "name": "Daffodil",
+        "price": 9.99,
+        "image": "https://example.com/daffodil.jpg",
+        "amountInStock": 80
+      },
+      {
+        "name": "Carnation",
+        "price": 11.75,
+        "image": "https://example.com/carnation.jpg",
+        "amountInStock": 65
+      },
+      {
+        "name": "Peony",
+        "price": 18.50,
+        "image": "https://example.com/peony.jpg",
+        "amountInStock": 40
+      },
+      {
+        "name": "Hyacinth",
+        "price": 16.99,
+        "image": "https://example.com/hyacinth.jpg",
+        "amountInStock": 20
+      },
+      {
+        "name": "Lavender",
+        "price": 13.45,
+        "image": "https://example.com/lavender.jpg",
+        "amountInStock": 90
+      },
+      {
+        "name": "Iris",
+        "price": 10.75,
+        "image": "https://example.com/iris.jpg",
+        "amountInStock": 55
+      },
+      {
+        "name": "Chrysanthemum",
+        "price": 12.99,
+        "image": "https://example.com/chrysanthemum.jpg",
+        "amountInStock": 60
+      },
+      {
+        "name": "Gardenia",
+        "price": 20.00,
+        "image": "https://example.com/gardenia.jpg",
+        "amountInStock": 35
+      },
+      {
+        "name": "Marigold",
+        "price": 7.99,
+        "image": "https://example.com/marigold.jpg",
+        "amountInStock": 110
+      },
+      {
+        "name": "Begonia",
+        "price": 14.00,
+        "image": "https://example.com/begonia.jpg",
+        "amountInStock": 45
+      },
+      {
+        "name": "Hibiscus",
+        "price": 19.99,
+        "image": "https://example.com/hibiscus.jpg",
+        "amountInStock": 25
+      },
+      {
+        "name": "Poppy",
+        "price": 9.50,
+        "image": "https://example.com/poppy.jpg",
+        "amountInStock": 95
+      },
+      {
+        "name": "Bluebell",
+        "price": 11.99,
+        "image": "https://example.com/bluebell.jpg",
+        "amountInStock": 70
+      },
+      {
+        "name": "Snapdragon",
+        "price": 12.00,
+        "image": "https://example.com/snapdragon.jpg",
+        "amountInStock": 40
+      }
+    ]

@@ -1,0 +1,14 @@
+[
+    {
+      "name": "Alice",
+      "isAdmin": true
+    },
+    {
+      "name": "Bob",
+      "isAdmin": false
+    },
+    {
+      "name": "Charlie",
+      "isAdmin": false
+    }
+  ]
