@@ -1,9 +1,10 @@
 import { MongoClient, Db, Collection, FindCursor, WithId } from "mongodb";
 import { Cart } from "../Interfaces/cart.js";
+import { con } from '../server.js'
 
 export async function getAllCarts(): Promise<WithId<Cart>[]> {
 
-    const con: string | undefined = process.env.CONNECTION_STRING
+    // const con: string | undefined = process.env.CONNECTION_STRING
     if(!con) {
         console.log("Error: connection string not found");
         throw new Error("No connection!")

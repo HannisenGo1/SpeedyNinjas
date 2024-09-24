@@ -1,9 +1,10 @@
 import { Collection, Db, FindCursor, MongoClient, WithId } from "mongodb";
 import { User } from "../Interfaces/user.js";
+import { con } from '../server.js'
 
 export async function getAllUsers(): Promise<WithId<User>[]> {
 
-    const con: string | undefined = process.env.CONNECTION_STRING
+    // const con: string | undefined = process.env.CONNECTION_STRING
     if(!con) {
         console.log("Error: connection string not found");
         throw new Error("No connection!")

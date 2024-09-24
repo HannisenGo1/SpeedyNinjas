@@ -1,9 +1,10 @@
 import { Collection, Db, FindCursor, MongoClient, WithId } from "mongodb";
 import { Flower } from "../Interfaces/product.js";
+import { con } from '../server.js'
 
+// export const con: string | undefined = process.env.CONNECTION_STRING
 async function getAllFlowers(): Promise<WithId<Flower>[]> {
 
-    const con: string | undefined = process.env.CONNECTION_STRING
     if(!con) {
         console.log("Error: connection string not found");
         throw new Error("No connection!")
