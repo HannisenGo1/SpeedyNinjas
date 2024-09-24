@@ -1,6 +1,9 @@
 // Interface för våra produkter!!!
 
+import { ObjectId } from "mongodb";
+
 export interface Flower{
+    _id?: ObjectId
     name: string;
     price: number;
     image: string;

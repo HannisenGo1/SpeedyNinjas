@@ -19,10 +19,13 @@ router.get('/', async (req:Request, res:Response<WithId<Flower>[]> ) =>{
 
 router.post('/', async (req: Request, res: Response) => {
   const newFlower: Flower = req.body
-  insertFlower(newFlower)
-  if(insertFlower(newFlower) == null){
+  const insertedFlower =  await insertFlower(newFlower)
+  
+  if(insertedFlower == null){
     res.sendStatus(400)
     return
   }
+
+  console.log("Detta är body: ", newFlower);
   res.sendStatus(201)
 })
