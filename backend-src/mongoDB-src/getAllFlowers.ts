@@ -2,14 +2,13 @@ import { Collection, Db, FindCursor, MongoClient, WithId } from "mongodb";
 import { Flowers } from "../Interfaces/product.js";
 
 
-async function getAllFlowers() {
+async function getAllFlowers(): Promise<WithId<Flowers>[]> {
 
     const con: string | undefined = process.env.CONNECTION_STRING
     if(!con) {
         console.log("Error: connection string not found");
-        return
+        throw new Error("No connection!")
     }
-    try {
         const client: MongoClient = new MongoClient(con)
         const db : Db = await client.db("flowerProduct")
         const collection: Collection <Flowers> = db.collection<Flowers>('flowers')
@@ -20,17 +19,13 @@ async function getAllFlowers() {
         
         if(found.length < 1) {
             console.log( "No Flower awailable today :/");
-            return
+            // throw new Error("No connection!")
         }
-        found.forEach(flower => {
-            console.log(flower.name, flower.image, flower.price);
+        // found.forEach(flower => {
+        //     console.log(flower.name, flower.image, flower.price);
             
-        });
-        
-    }catch(error) {
-        console.log("Failed ", error);
-        
-    }
+        // });
+        return found
 }
 
 // getAllFlowers()
