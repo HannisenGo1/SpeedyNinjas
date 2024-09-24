@@ -1,33 +1,23 @@
 import { Collection, Db, FindCursor, MongoClient, WithId } from "mongodb";
-import { Users } from "../Interfaces/user.js";
+import { User } from "../Interfaces/user.js";
 
-export async function getAllUsers() {
+export async function getAllUsers(): Promise<WithId<User>[]> {
 
     const con: string | undefined = process.env.CONNECTION_STRING
     if(!con) {
         console.log("Error: connection string not found");
-        return
+        throw new Error("No connection!")
     }
-    try {
         const client: MongoClient = new MongoClient(con)
         const db : Db = await client.db("flowerProduct")
-        const collection: Collection <Users> = db.collection<Users>('users')
+        const collection: Collection <User> = db.collection<User>('users')
 
     
-        const cursor: FindCursor <WithId<Users>> = collection.find({})
-        const found: WithId<Users>[] = await cursor.toArray()
+        const cursor: FindCursor <WithId<User>> = collection.find({})
+        const found: WithId<User>[] = await cursor.toArray()
         
         if(found.length < 1) {
-            console.log( "No products in cart today :/");
-            return
+            console.log( "No products in User today :/");
         }
-        found.forEach(user => {
-            console.log(user.name);
-            
-        });
-        
-    }catch(error) {
-        console.log("Failed ", error);
-        
-    }
+    return found
 }

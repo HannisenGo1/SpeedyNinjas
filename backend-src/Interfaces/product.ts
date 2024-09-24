@@ -1,6 +1,6 @@
 // Interface för våra produkter!!!
 
-export interface Flowers{
+export interface Flower{
     name: string;
     price: number;
     image: string;

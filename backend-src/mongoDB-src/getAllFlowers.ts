@@ -1,8 +1,7 @@
 import { Collection, Db, FindCursor, MongoClient, WithId } from "mongodb";
-import { Flowers } from "../Interfaces/product.js";
+import { Flower } from "../Interfaces/product.js";
 
-
-async function getAllFlowers(): Promise<WithId<Flowers>[]> {
+async function getAllFlowers(): Promise<WithId<Flower>[]> {
 
     const con: string | undefined = process.env.CONNECTION_STRING
     if(!con) {
@@ -11,11 +10,11 @@ async function getAllFlowers(): Promise<WithId<Flowers>[]> {
     }
         const client: MongoClient = new MongoClient(con)
         const db : Db = await client.db("flowerProduct")
-        const collection: Collection <Flowers> = db.collection<Flowers>('flowers')
+        const collection: Collection <Flower> = db.collection<Flower>('flowers')
 
     
-        const cursor: FindCursor <WithId<Flowers>> = collection.find({})
-        const found: WithId<Flowers>[] = await cursor.toArray()
+        const cursor: FindCursor <WithId<Flower>> = collection.find({})
+        const found: WithId<Flower>[] = await cursor.toArray()
         
         if(found.length < 1) {
             console.log( "No Flower awailable today :/");

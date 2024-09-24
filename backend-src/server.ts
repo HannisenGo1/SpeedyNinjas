@@ -14,8 +14,8 @@ getAllCarts()
 getAllUsers()
 
 app.use("/flowers", flowerRouter)
-app.use("/flowers", cartRouter)
-app.use("/flowers", userRouter)
+app.use("/carts", cartRouter)
+app.use("/users", userRouter)
 
 
 // starta servern

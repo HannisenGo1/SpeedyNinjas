@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 
 
-export interface Carts{
+export interface Cart{
     userId: ObjectId;
     productId: ObjectId;
     amount: number;
