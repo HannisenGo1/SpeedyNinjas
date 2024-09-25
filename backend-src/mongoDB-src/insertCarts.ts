@@ -13,14 +13,7 @@ export async function insertCarts(cart: Cart) : Promise<ObjectId | null>{
     const client: MongoClient = new MongoClient(con)
     const db : Db = await client.db("flowerProduct")
     const collection: Collection <Cart> = db.collection<Cart>('carts')
-
-    // const newFlower: Flower = {
-    //     name: "Dandilion",
-    //     price: 66.45,
-    //     image:"https://example.com/lavender.jpg",
-    //     amountInStock: 100
     
-    // }
 
     const result: InsertOneResult<Cart> = await collection.insertOne(cart)
     console.log(result)
