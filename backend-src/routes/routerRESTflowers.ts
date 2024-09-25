@@ -37,7 +37,7 @@ router.put('/:id', async (req: Request, res: Response) => {
   const objectId: ObjectId = new ObjectId(id)
 
   const updatedFields: Flower = req.body
-  const updatedFlower = await updateFlower(objectId, updatedFields)
+  await updateFlower(objectId, updatedFields)
   res.sendStatus(201)
 })
 
