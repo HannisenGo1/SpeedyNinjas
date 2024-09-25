@@ -5,9 +5,9 @@ import { Cart } from "../Interfaces/cart.js";
 import { Flower } from "../Interfaces/product.js";
 import { User } from "../Interfaces/user.js";
 import { con } from '../server.js'
-// import { carts } from '../data/carts.js'
-// import { flowers } from '../data/flowers.js'
-// import { users } from '../data/users.js'
+import { carts } from '../data/carts.js'
+import { flowers } from '../data/flowers.js'
+import { users } from '../data/users.js'
 
 export async function resetDatabase(){
     if(!con) {
@@ -21,8 +21,17 @@ export async function resetDatabase(){
     const collectionFlowers: Collection<Flower> = db.collection<Flower>('flowers')
     const collectionUsers: Collection<User> = db.collection<User>('users')
 
-    await collectionCarts.deleteMany({})
-    await collectionFlowers.deleteMany({})
-    await collectionUsers.deleteMany({})
+    const resultCarts =  await collectionCarts.deleteMany({})
+    const resultFlowers = await collectionFlowers.deleteMany({})
+    const resultUsers =  await collectionUsers.deleteMany({})
+
+    await collectionCarts.insertMany(carts)
+    await collectionUsers.insertMany(users)
+    await collectionFlowers.insertMany(flowers)
+
+    console.log(`deleted carts: ${resultCarts.deletedCount}` );
+    console.log(`deleted Users: ${resultUsers.deletedCount} ` );
+    console.log(`deleted Flowers: ${resultFlowers.deletedCount} ` );
+    
 
 }
