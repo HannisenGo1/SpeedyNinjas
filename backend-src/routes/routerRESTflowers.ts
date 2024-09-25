@@ -4,6 +4,7 @@ import { ObjectId, WithId } from 'mongodb'
 import { Flower } from '../Interfaces/product.js'
 import { getAllFlowers } from '../mongoDB-src/getAllFlowers.js'
 import { insertFlower } from '../mongoDB-src/insertFlower.js'
+import { updateFlower } from '../mongoDB-src/updateFlower.js'
 import { deleteFlower } from '../mongoDB-src/deleteFlower.js'
 
 
@@ -28,6 +29,15 @@ router.post('/', async (req: Request, res: Response) => {
   }
 
   console.log("Detta är body: ", newFlower);
+  res.sendStatus(201)
+})
+
+router.put('/:id', async (req: Request, res: Response) => {
+  const id: string = req.params.id
+  const objectId: ObjectId = new ObjectId(id)
+
+  const updatedFields: Flower = req.body
+  const updatedFlower = await updateFlower(objectId, updatedFields)
   res.sendStatus(201)
 })
 
