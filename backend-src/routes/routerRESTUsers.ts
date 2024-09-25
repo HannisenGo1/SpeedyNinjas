@@ -1,10 +1,10 @@
 
 import express, { Request, Response, Router } from 'express'
-import { WithId } from 'mongodb'
+import { WithId, ObjectId } from 'mongodb'
 import { User } from '../Interfaces/user.js'
 import { getAllUsers } from '../mongoDB-src/getAllUsers.js'
 import { insertUser } from '../mongoDB-src/insertUser.js'
-
+import { deleteUser } from '../mongoDB-src/deleteUser.js'
 
 export const router: Router = express.Router()
 
@@ -28,4 +28,14 @@ router.get('/', async (req:Request, res:Response<WithId<User>[]> ) =>{
   
     console.log("Detta är body: ", newUser);
     res.sendStatus(201)
+  })
+
+  router.delete("/:id", async (req: Request, res: Response) => {
+    const id: string = req.params.id
+    const objectId: ObjectId = new ObjectId(id)
+    
+    await deleteUser(objectId)
+    res.sendStatus(204)
+  
+  
   })

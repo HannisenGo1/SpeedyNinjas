@@ -1,9 +1,10 @@
 
 import express, { Request, Response, Router } from 'express'
-import { WithId } from 'mongodb'
+import { ObjectId, WithId } from 'mongodb'
 import { Flower } from '../Interfaces/product.js'
 import { getAllFlowers } from '../mongoDB-src/getAllFlowers.js'
 import { insertFlower } from '../mongoDB-src/insertFlower.js'
+import { deleteFlower } from '../mongoDB-src/deleteFlower.js'
 
 
 export const router: Router = express.Router()
@@ -28,4 +29,15 @@ router.post('/', async (req: Request, res: Response) => {
 
   console.log("Detta är body: ", newFlower);
   res.sendStatus(201)
+})
+
+
+router.delete("/:id", async (req: Request, res: Response) => {
+  const id: string = req.params.id
+  const objectId: ObjectId = new ObjectId(id)
+  
+  await deleteFlower(objectId)
+  res.sendStatus(204)
+
+
 })

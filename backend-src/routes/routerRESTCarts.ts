@@ -1,8 +1,9 @@
 import express, { Request, Response, Router } from 'express'
-import { WithId } from 'mongodb'
+import { WithId, ObjectId } from 'mongodb'
 import { Cart } from '../Interfaces/cart.js'
 import { getAllCarts } from '../mongoDB-src/getAllCarts.js'
 import { insertCarts } from '../mongoDB-src/insertCarts.js'
+import { deleteCart } from '../mongoDB-src/deleteCart.js'
 
 
 export const router: Router = express.Router()
@@ -28,4 +29,14 @@ router.post('/', async (req: Request, res: Response) => {
 
   console.log("Detta är body: ", newCart);
   res.sendStatus(201)
+})
+
+router.delete("/:id", async (req: Request, res: Response) => {
+  const id: string = req.params.id
+  const objectId: ObjectId = new ObjectId(id)
+  
+  await deleteCart(objectId)
+  res.sendStatus(204)
+
+
 })
