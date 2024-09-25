@@ -1,6 +1,6 @@
 import { Collection, Db, InsertOneResult, MongoClient, ObjectId } from "mongodb";
-import { User } from "../Interfaces/user.js";
-import { con } from "../server.js";
+import { User } from "../../Interfaces/user.js";
+import { con } from "../../server.js";
 
 
 

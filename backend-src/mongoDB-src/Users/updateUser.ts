@@ -1,8 +1,8 @@
-import { Collection, Db, DeleteResult, MongoClient, ObjectId } from "mongodb";
-import { User } from "../Interfaces/user.js";
-import { con } from '../server.js'
+import { Collection, Db, DeleteResult, MongoClient, ObjectId, UpdateResult } from "mongodb";
+import { User } from "../../Interfaces/user.js"; 
+import { con } from "../../server.js"; 
 
-export async function deleteUser(index: ObjectId) {
+export async function updateUser(index: ObjectId, body: Object) {
     if(!con) {
         console.log("Error: connection string not found");
         throw new Error("No connection!")
@@ -14,12 +14,12 @@ export async function deleteUser(index: ObjectId) {
     const collection: Collection <User> = db.collection<User>('users')
     const filter = {_id: index}
 
-    const result: DeleteResult = await collection.deleteOne(filter)
+    const result: UpdateResult<User>  = await collection.updateOne(filter, {$set: body })
     if (!result.acknowledged) {
         console.log("Did not find a matching dokument");
         return
         
     } 
-    console.log(`deleted: ${result.deletedCount}`);
+    console.log(`deleted: ${result.upsertedCount}`);
     
 }

@@ -1,6 +1,6 @@
 import { Collection, ObjectId, InsertOneResult, MongoClient, Db, WithId } from "mongodb";
-import { Flower } from "../Interfaces/product.js";
-import { con } from '../server.js'
+import { Flower } from "../../Interfaces/product.js"; 
+import { con } from "../../server.js"; 
 
 
 export async function insertFlower(flower: Flower) : Promise<ObjectId | null>{

@@ -2,9 +2,10 @@
 import express, { Request, Response, Router } from 'express'
 import { ObjectId, WithId } from 'mongodb'
 import { Flower } from '../Interfaces/product.js'
-import { getAllFlowers } from '../mongoDB-src/getAllFlowers.js'
-import { insertFlower } from '../mongoDB-src/insertFlower.js'
-import { deleteFlower } from '../mongoDB-src/deleteFlower.js'
+import { getAllFlowers } from '../mongoDB-src/Flowers/getAllFlowers.js' 
+import { insertFlower } from '../mongoDB-src/Flowers/insertFlower.js' 
+import { updateFlower } from '../mongoDB-src/Flowers/updateFlower.js' 
+import { deleteFlower } from '../mongoDB-src/Flowers/deleteFlower.js' 
 
 
 export const router: Router = express.Router()
@@ -28,6 +29,15 @@ router.post('/', async (req: Request, res: Response) => {
   }
 
   console.log("Detta är body: ", newFlower);
+  res.sendStatus(201)
+})
+
+router.put('/:id', async (req: Request, res: Response) => {
+  const id: string = req.params.id
+  const objectId: ObjectId = new ObjectId(id)
+
+  const updatedFields: Flower = req.body
+  await updateFlower(objectId, updatedFields)
   res.sendStatus(201)
 })
 

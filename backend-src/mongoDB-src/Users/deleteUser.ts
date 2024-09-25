@@ -1,9 +1,8 @@
 import { Collection, Db, DeleteResult, MongoClient, ObjectId } from "mongodb";
-import { Cart } from "../Interfaces/cart.js";
-import { con } from '../server.js'
+import { User } from "../../Interfaces/user.js";
+import { con } from '../../server.js'
 
-
-export async function deleteCart(index: ObjectId) {
+export async function deleteUser(index: ObjectId) {
     if(!con) {
         console.log("Error: connection string not found");
         throw new Error("No connection!")
@@ -12,14 +11,14 @@ export async function deleteCart(index: ObjectId) {
     const client: MongoClient = new MongoClient(con)
 
     const db : Db = await client.db("flowerProduct")
-    const collection: Collection <Cart> = db.collection<Cart>('carts')
+    const collection: Collection <User> = db.collection<User>('users')
     const filter = {_id: index}
 
     const result: DeleteResult = await collection.deleteOne(filter)
     if (!result.acknowledged) {
         console.log("Did not find a matching dokument");
         return
-
+        
     } 
     console.log(`deleted: ${result.deletedCount}`);
     
