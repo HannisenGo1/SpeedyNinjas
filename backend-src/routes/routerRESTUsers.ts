@@ -2,10 +2,10 @@
 import express, { Request, Response, Router } from 'express'
 import { WithId, ObjectId } from 'mongodb'
 import { User } from '../Interfaces/user.js'
-import { getAllUsers } from '../mongoDB-src/getAllUsers.js'
-import { insertUser } from '../mongoDB-src/insertUser.js'
-import { updateUser } from '../mongoDB-src/updateUser.js'
-import { deleteUser } from '../mongoDB-src/deleteUser.js'
+import { getAllUsers } from '../mongoDB-src/Users/getAllUsers.js' 
+import { insertUser } from '../mongoDB-src/Users/insertUser.js' 
+import { updateUser } from '../mongoDB-src/Users/updateUser.js' 
+import { deleteUser } from '../mongoDB-src/Users/deleteUser.js'
 
 export const router: Router = express.Router()
 

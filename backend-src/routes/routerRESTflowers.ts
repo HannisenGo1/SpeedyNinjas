@@ -2,10 +2,10 @@
 import express, { Request, Response, Router } from 'express'
 import { ObjectId, WithId } from 'mongodb'
 import { Flower } from '../Interfaces/product.js'
-import { getAllFlowers } from '../mongoDB-src/getAllFlowers.js'
-import { insertFlower } from '../mongoDB-src/insertFlower.js'
-import { updateFlower } from '../mongoDB-src/updateFlower.js'
-import { deleteFlower } from '../mongoDB-src/deleteFlower.js'
+import { getAllFlowers } from '../mongoDB-src/Flowers/getAllFlowers.js' 
+import { insertFlower } from '../mongoDB-src/Flowers/insertFlower.js' 
+import { updateFlower } from '../mongoDB-src/Flowers/updateFlower.js' 
+import { deleteFlower } from '../mongoDB-src/Flowers/deleteFlower.js' 
 
 
 export const router: Router = express.Router()

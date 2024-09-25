@@ -1,6 +1,6 @@
 import { Collection, Db, FindCursor, MongoClient, WithId } from "mongodb";
-import { User } from "../Interfaces/user.js";
-import { con } from '../server.js'
+import { User } from "../../Interfaces/user.js"; 
+import { con } from "../../server.js"; 
 
 export async function getAllUsers(): Promise<WithId<User>[]> {
 

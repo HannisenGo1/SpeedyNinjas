@@ -1,6 +1,6 @@
 import { MongoClient, Db, Collection, FindCursor, WithId } from "mongodb";
-import { Cart } from "../Interfaces/cart.js";
-import { con } from '../server.js'
+import { Cart } from "../../Interfaces/cart.js"; 
+import { con } from "../../server.js"; 
 
 export async function getAllCarts(): Promise<WithId<Cart>[]> {
 

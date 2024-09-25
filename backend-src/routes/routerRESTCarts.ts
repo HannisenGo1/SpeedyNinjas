@@ -1,10 +1,10 @@
 import express, { Request, Response, Router } from 'express'
 import { WithId, ObjectId } from 'mongodb'
 import { Cart } from '../Interfaces/cart.js'
-import { getAllCarts } from '../mongoDB-src/getAllCarts.js'
-import { insertCarts } from '../mongoDB-src/insertCarts.js'
-import { deleteCart } from '../mongoDB-src/deleteCart.js'
-import { updateCart } from '../mongoDB-src/updateCart.js'
+import { getAllCarts } from '../mongoDB-src/Carts/getAllCarts.js' 
+import { insertCarts } from '../mongoDB-src/Carts/insertCarts.js' 
+import { deleteCart } from '../mongoDB-src/Carts/deleteCart.js' 
+import { updateCart } from '../mongoDB-src/Carts/updateCart.js' 
 
 
 export const router: Router = express.Router()

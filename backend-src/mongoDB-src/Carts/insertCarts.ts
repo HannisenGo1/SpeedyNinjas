@@ -1,6 +1,6 @@
 import { Collection, Db, InsertOneResult, MongoClient, ObjectId } from 'mongodb';
-import { Cart } from '../Interfaces/cart.js';
-import { con } from '../server.js'
+import { Cart } from '../../Interfaces/cart.js'; 
+import { con } from '../../server.js'; 
 
 
 export async function insertCarts(cart: Cart) : Promise<ObjectId | null>{

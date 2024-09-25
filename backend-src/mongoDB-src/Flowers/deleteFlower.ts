@@ -1,6 +1,6 @@
 import { Collection, Db, DeleteResult, MongoClient, ObjectId } from "mongodb";
-import { Flower } from "../Interfaces/product.js";
-import { con } from '../server.js'
+import { Flower } from "../../Interfaces/product.js"; 
+import { con } from "../../server.js"; 
 
 
 

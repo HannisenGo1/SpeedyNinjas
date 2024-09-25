@@ -1,6 +1,6 @@
 import { Collection, Db, FindCursor, MongoClient, WithId } from "mongodb";
-import { Flower } from "../Interfaces/product.js";
-import { con } from '../server.js'
+import { Flower } from "../../Interfaces/product.js"; 
+import { con } from "../../server.js"; 
 
 // export const con: string | undefined = process.env.CONNECTION_STRING
 async function getAllFlowers(): Promise<WithId<Flower>[]> {
