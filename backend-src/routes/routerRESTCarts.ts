@@ -16,14 +16,6 @@ router.get('/', async (req:Request, res:Response<WithId<Cart>[]> ) =>{
     }
 )
 
-//router.post('/carts', async (req:Request, res:Response) => {
-//  const newCart: Cart = req.body
-//  insertCart(newCart)
-// if (insertCart(newCart) == null){
-// res.sendStatus(404)
-//}
-//  res.sendStatus(201)
-// })
 
 router.post('/', async (req: Request, res: Response) => {
   const newCart: Cart = req.body
