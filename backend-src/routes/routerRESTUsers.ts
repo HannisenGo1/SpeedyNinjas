@@ -7,6 +7,7 @@ import { insertUser } from '../mongoDB-src/Users/insertUser.js'
 import { updateUser } from '../mongoDB-src/Users/updateUser.js' 
 import { deleteUser } from '../mongoDB-src/Users/deleteUser.js'
 import { getOneUser } from '../mongoDB-src/Users/getOneUser.js'
+import { searchUser } from '../mongoDB-src/Users/searchUser.js'
 
 export const router: Router = express.Router()
 
@@ -18,6 +19,34 @@ router.get('/', async (req:Request, res:Response<WithId<User>[]> ) =>{
   
     }
   )
+  router.get(
+    "/search",
+    async (req: Request, res: Response<WithId<User>[] | string>) => {
+      console.log(req.query);
+      const searchString: string | undefined = req.query.q as string;
+      console.log(searchString);
+      
+      if (!searchString) {
+        res.sendStatus(400);
+      }
+      
+      try {
+        // kör sökningen
+        const results = await searchUser(searchString, res);
+            if (results.length === 0) {
+              return res.status(404).send("No user found");
+            }
+            else {
+              return res.json(results);
+            }
+  
+      } catch (error) {
+        console.error("Error searching for user: ", error);
+        return res.status(500).send("Server error");
+      }
+    }
+  );
+
   router.get('/:id', async (req:Request, res:Response<WithId<User>[]> ) =>{
     const id: string = req.params.id
     const objectId: ObjectId = new ObjectId(id)

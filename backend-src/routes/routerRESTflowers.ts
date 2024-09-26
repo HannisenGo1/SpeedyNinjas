@@ -28,23 +28,18 @@ router.get(
     }
     
     try {
-      // kör sökningen
-      const results = await searchFlower(searchString, res);
+      const results = await searchFlower(searchString);
 
-      // if(Array.isArray(results)){
           if (results.length === 0) {
             return res.status(404).send("Inga blommor här");
           }
           else {
             return res.json(results);
           }
-      // }
-
     } catch (error) {
       console.error("Error searching for flowers: ", error);
       return res.status(500).send("Server error");
     }
-    // await searchFlower(searchString, res);
   }
 );
 

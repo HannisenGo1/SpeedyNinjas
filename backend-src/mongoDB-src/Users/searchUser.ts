@@ -1,9 +1,9 @@
 import { Collection, Db, MongoClient, ObjectId, WithId } from "mongodb";
-import { Flower } from "../../Interfaces/product.js";
+import { User } from "../../Interfaces/user.js";
 import { con } from "../../server.js";
 import { Response } from "express";
 
-export async function searchFlower(searchString: string): Promise<WithId<Flower>[] > {
+export async function searchUser(searchString: string, res: Response): Promise<WithId<User>[] > {
     if (!con) {
         console.log("Error: connection string not found");
         throw new Error("No connection!");
@@ -11,17 +11,17 @@ export async function searchFlower(searchString: string): Promise<WithId<Flower>
     const client: MongoClient = new MongoClient(con);
     try {
         const db: Db = await client.db("flowerProduct");
-        const collection: Collection<Flower> = db.collection<Flower>("flowers");
+        const collection: Collection<User> = db.collection<User>("users");
         
         const searchterm = searchString.split(" ").map(term => term.trim()).filter(term => term.length > 0)
-        const flowerQueries = searchterm.map(term => ({
+        const userQueries = searchterm.map(term => ({
             name: {$regex: new RegExp(term, "i")}
         }))
         
-        const flowers = await collection
-        .find({ $or: flowerQueries}).toArray()
+        const users = await collection
+        .find({ $or: userQueries}).toArray()
         
-        return flowers;
+        return users;
         
     } catch (error) {
         console.error('Error fetching flowers', error);
