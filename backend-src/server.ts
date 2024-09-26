@@ -4,6 +4,8 @@ import { router as cartRouter } from './routes/routerRESTCarts.js'
 import { router as userRouter } from './routes/routerRESTUsers.js'
 import { resetDatabase } from './mongoDB-src/resetDatabase.js'
 
+
+
 export const con: string | undefined = process.env.CONNECTION_STRING
 
 const app: Express = express()
@@ -18,6 +20,8 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
 
 // ** unkomment for test of database
 // resetDatabase() 
+
+
 
 app.use("/flowers", flowerRouter)
 app.use("/carts", cartRouter)

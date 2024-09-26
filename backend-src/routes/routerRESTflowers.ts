@@ -11,9 +11,15 @@ import { searchFlower } from "../mongoDB-src/Flowers/searchFlower.js";
 export const router: Router = express.Router();
 
 router.get("/", async (req: Request, res: Response<WithId<Flower>[]>) => {
-  const allFlowers: WithId<Flower>[] = await getAllFlowers();
-
-  res.send(allFlowers);
+  try{
+      const allFlowers: WithId<Flower>[] = await getAllFlowers();
+      if (!allFlowers || allFlowers.length === 0 ) {
+        return res.sendStatus(404)
+      }
+      res.send(allFlowers) 
+  } catch (error){
+    res.sendStatus(500)
+  }
 });
 
 router.get(
@@ -44,12 +50,21 @@ router.get(
 );
 
 router.get("/:id", async (req: Request, res: Response<WithId<Flower>[]>) => {
-  const id: string = req.params.id;
-  const objectId: ObjectId = new ObjectId(id);
-  const oneFlowers: WithId<Flower>[] = await getOneFlower(objectId);
-
+ try {
+    const id: string = req.params.id;
+    const objectId: ObjectId = new ObjectId(id);
+    const oneFlowers: WithId<Flower>[] = await getOneFlower(objectId);
+    if (!oneFlowers) {
+      return res.sendStatus(404)
+    }
   res.send(oneFlowers);
-});
+  }
+  catch (error){
+  console.error("couldnt fetch flower", error)
+  res.sendStatus(500)
+}
+}
+);
 
 router.post("/", async (req: Request, res: Response) => {
   const newFlower: Flower = req.body;
@@ -65,18 +80,34 @@ router.post("/", async (req: Request, res: Response) => {
 });
 
 router.put("/:id", async (req: Request, res: Response) => {
+  try {
   const id: string = req.params.id;
   const objectId: ObjectId = new ObjectId(id);
-
   const updatedFields: Flower = req.body;
   await updateFlower(objectId, updatedFields);
+   if (!updateFlower){
+    return res.sendStatus(404)
+  }
   res.sendStatus(201);
+} catch (error){
+  console.error(" wrong with update the flower")
+  res.sendStatus(500)
+}
 });
 
 router.delete("/:id", async (req: Request, res: Response) => {
-  const id: string = req.params.id;
+  try{
+   const id: string = req.params.id;
   const objectId: ObjectId = new ObjectId(id);
 
   await deleteFlower(objectId);
-  res.sendStatus(204);
+
+  if (! deleteFlower) {
+    return res.sendStatus(404)
+  }
+  res.sendStatus(204); 
+} catch (error) {
+  console.error("wrong with deleting flower", error)
+  res.sendStatus(500)
+}
 });

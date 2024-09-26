@@ -12,13 +12,17 @@ import { searchUser } from '../mongoDB-src/Users/searchUser.js'
 export const router: Router = express.Router()
 
 router.get('/', async (req:Request, res:Response<WithId<User>[]> ) =>{
-    
-    const allUsers: WithId<User> [] = await getAllUsers()
-    
-    res.send(allUsers)  
-  
+    try {
+      const allUsers: WithId<User> [] = await getAllUsers()
+      if (!allUsers) {
+        return res.sendStatus(404)
+      }
+      res.send(allUsers)  
+    } catch (error) {
+      res.sendStatus(500)
     }
-  )
+});
+
   router.get(
     "/search",
     async (req: Request, res: Response<WithId<User>[] | string>) => {
@@ -48,14 +52,19 @@ router.get('/', async (req:Request, res:Response<WithId<User>[]> ) =>{
   );
 
   router.get('/:id', async (req:Request, res:Response<WithId<User>[]> ) =>{
-    const id: string = req.params.id
-    const objectId: ObjectId = new ObjectId(id)
-    const oneUser: WithId<User> [] = await getOneUser(objectId)
-    
-    res.send(oneUser)  
-  
-      }
-  )
+    try {
+        const id: string = req.params.id
+        const objectId: ObjectId = new ObjectId(id)
+        const oneUser: WithId<User> [] = await getOneUser(objectId)
+        if (!oneUser) {
+    return res.sendStatus(404)
+    }
+     res.send(oneUser) 
+    } catch (error) {
+    console.error("couldnt fetch user", error)
+    res.sendStatus(500)
+    }
+    });
 
   router.post('/', async (req: Request, res: Response) => {
     const newUser: User = req.body
@@ -71,20 +80,37 @@ router.get('/', async (req:Request, res:Response<WithId<User>[]> ) =>{
   })
 
   router.put('/:id', async (req: Request, res: Response) => {
-    const id: string = req.params.id
-    const objectId: ObjectId = new ObjectId(id)
-  
-    const updatedFields: User = req.body
-    await updateUser(objectId, updatedFields)
-    res.sendStatus(201)
-  })
+    try {
+        const id: string = req.params.id
+        const objectId: ObjectId = new ObjectId(id)
+      
+        const updatedFields: User = req.body
+        await updateUser(objectId, updatedFields)
+    if (!updateUser) {
+    return res.sendStatus(404)
+    }
+        res.sendStatus(201)
+      } catch (error) {
+    console.error("wrong with update user")
+    res.sendStatus(500)
+    }
+    });
 
-  router.delete("/:id", async (req: Request, res: Response) => {
+
+
+router.delete("/:id", async (req: Request, res: Response) => {
+try {
     const id: string = req.params.id
     const objectId: ObjectId = new ObjectId(id)
     
     await deleteUser(objectId)
+
+if (!deleteUser) {
+return res.sendStatus(404) 
+}
     res.sendStatus(204)
-  
-  
+ } catch (error) {
+console.error("wrong with deleting user", error)
+res.sendStatus(500) 
+  }
   })
