@@ -14,14 +14,7 @@ export async function insertFlower(flower: Flower) : Promise<ObjectId | null>{
     const db : Db = await client.db("flowerProduct")
     const collection: Collection <Flower> = db.collection<Flower>('flowers')
 
-    // const newFlower: Flower = {
-    //     name: "Dandilion",
-    //     price: 66.45,
-    //     image:"https://example.com/lavender.jpg",
-    //     amountInStock: 100
     
-    // }
-
     const result: InsertOneResult<Flower> = await collection.insertOne(flower)
     console.log(result)
     if (!result.acknowledged){
