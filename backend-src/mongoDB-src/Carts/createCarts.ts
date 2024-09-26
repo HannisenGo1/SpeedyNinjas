@@ -4,7 +4,7 @@ import { Flower } from "../../Interfaces/product.js";
 import { User } from "../../Interfaces/user.js";
 import { con } from "../../server.js";
 
-export async function aggregateCarts(): Promise<WithId<Cart>[]> {
+export async function createCarts(): Promise<WithId<Cart>[]> {
 
 
     if (!con) {

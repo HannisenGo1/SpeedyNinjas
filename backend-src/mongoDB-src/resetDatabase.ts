@@ -8,7 +8,7 @@ import { con } from '../server.js'
 import { carts } from '../data/carts.js'
 import { flowers } from '../data/flowers.js'
 import { users } from '../data/users.js'
-import { aggregateCarts } from "./Carts/aggregateCarts.js";
+import { createCarts } from "./Carts/createCarts.js";
 
 export async function resetDatabase(){
     if(!con) {
@@ -33,6 +33,6 @@ export async function resetDatabase(){
     console.log(`deleted carts: ${resultCarts.deletedCount}` );
     console.log(`deleted Users: ${resultUsers.deletedCount} ` );
     console.log(`deleted Flowers: ${resultFlowers.deletedCount} ` );
-    aggregateCarts()
+    createCarts()
 
 }
