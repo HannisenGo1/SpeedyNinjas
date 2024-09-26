@@ -2,7 +2,7 @@ import { Collection, Db, FindCursor, MongoClient, WithId } from "mongodb";
 import { Flower } from "../../Interfaces/product.js"; 
 import { con } from "../../server.js"; 
 
-// export const con: string | undefined = process.env.CONNECTION_STRING
+
 async function getAllFlowers(): Promise<WithId<Flower>[]> {
 
     if(!con) {
@@ -19,14 +19,10 @@ async function getAllFlowers(): Promise<WithId<Flower>[]> {
         
         if(found.length < 1) {
             console.log( "No Flower awailable today :/");
-            // throw new Error("No connection!")
+        
         }
-        // found.forEach(flower => {
-        //     console.log(flower.name, flower.image, flower.price);
-            
-        // });
+
         return found
 }
 
-// getAllFlowers()
 export {getAllFlowers}

@@ -5,7 +5,7 @@ import { con } from "../../server.js";
 
 export async function insertFlower(flower: Flower) : Promise<ObjectId | null>{
     
-    // const con: string | undefined = process.env.CONNECTION_STRING
+  
     if(!con) {
         console.log("Error: connection string not found");
         throw new Error("No connection!")

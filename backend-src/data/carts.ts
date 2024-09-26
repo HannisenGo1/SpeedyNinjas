@@ -17,3 +17,5 @@ export const carts: Cart[] = [
         amount: 15
     }
 ]
+
+//Gör en function som "slumar" ihop med userId och ProdId.
