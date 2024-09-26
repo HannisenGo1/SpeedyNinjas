@@ -6,6 +6,7 @@ import { getAllUsers } from '../mongoDB-src/Users/getAllUsers.js'
 import { insertUser } from '../mongoDB-src/Users/insertUser.js' 
 import { updateUser } from '../mongoDB-src/Users/updateUser.js' 
 import { deleteUser } from '../mongoDB-src/Users/deleteUser.js'
+import { getOneUser } from '../mongoDB-src/Users/getOneUser.js'
 
 export const router: Router = express.Router()
 
@@ -16,6 +17,15 @@ router.get('/', async (req:Request, res:Response<WithId<User>[]> ) =>{
     res.send(allUsers)  
   
     }
+  )
+  router.get('/:id', async (req:Request, res:Response<WithId<User>[]> ) =>{
+    const id: string = req.params.id
+    const objectId: ObjectId = new ObjectId(id)
+    const oneUser: WithId<User> [] = await getOneUser(objectId)
+    
+    res.send(oneUser)  
+  
+      }
   )
 
   router.post('/', async (req: Request, res: Response) => {

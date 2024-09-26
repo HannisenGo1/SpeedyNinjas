@@ -5,6 +5,7 @@ import { getAllCarts } from '../mongoDB-src/Carts/getAllCarts.js'
 import { insertCarts } from '../mongoDB-src/Carts/insertCarts.js' 
 import { deleteCart } from '../mongoDB-src/Carts/deleteCart.js' 
 import { updateCart } from '../mongoDB-src/Carts/updateCart.js' 
+import { getOneCart } from '../mongoDB-src/Carts/getOneCart.js'
 
 
 export const router: Router = express.Router()
@@ -14,6 +15,15 @@ router.get('/', async (req:Request, res:Response<WithId<Cart>[]> ) =>{
   const allCarts: WithId<Cart> [] = await getAllCarts()
   
   res.send(allCarts)  
+
+    }
+)
+router.get('/:id', async (req:Request, res:Response<WithId<Cart>[]> ) =>{
+  const id: string = req.params.id
+  const objectId: ObjectId = new ObjectId(id)
+  const oneCart: WithId<Cart> [] = await getOneCart(objectId)
+  
+  res.send(oneCart)  
 
     }
 )
