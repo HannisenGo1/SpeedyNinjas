@@ -19,7 +19,7 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
 })
 
 // ** unkomment for test of database
-// resetDatabase() 
+resetDatabase() 
 
 
 

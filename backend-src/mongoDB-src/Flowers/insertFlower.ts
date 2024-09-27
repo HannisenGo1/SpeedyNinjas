@@ -13,13 +13,8 @@ export async function insertFlower(flower: Flower) : Promise<ObjectId | null>{
     const client: MongoClient = new MongoClient(con)
     const db : Db = await client.db("flowerProduct")
     const collection: Collection <Flower> = db.collection<Flower>('flowers')
-
-    
+        
     const result: InsertOneResult<Flower> = await collection.insertOne(flower)
-    console.log(result)
-    if (!result.acknowledged){
-        console.log('Could not insert flower.')
-        return null
-    }
+
     return result.insertedId
 }

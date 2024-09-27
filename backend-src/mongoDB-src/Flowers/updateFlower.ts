@@ -21,5 +21,5 @@ export async function updateFlower(index: ObjectId, body: Object) {
         
     } 
     console.log(`deleted: ${result.upsertedCount}`);
-    
+    return result
 }

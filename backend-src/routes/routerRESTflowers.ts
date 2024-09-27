@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import { ObjectId, WithId } from "mongodb";
+import { ObjectId, WithId, UpdateResult } from "mongodb";
 import { Flower } from "../Interfaces/product.js";
 import { getAllFlowers } from "../mongoDB-src/Flowers/getAllFlowers.js";
 import { insertFlower } from "../mongoDB-src/Flowers/insertFlower.js";
@@ -52,9 +52,12 @@ router.get(
 router.get("/:id", async (req: Request, res: Response<WithId<Flower>[]>) => {
  try {
     const id: string = req.params.id;
+    if (!ObjectId.isValid(id)) {
+      return res.sendStatus(400)
+    }
     const objectId: ObjectId = new ObjectId(id);
     const oneFlowers: WithId<Flower>[] = await getOneFlower(objectId);
-    if (!oneFlowers) {
+    if (oneFlowers.length < 1) {
       return res.sendStatus(404)
     }
   res.send(oneFlowers);
@@ -68,27 +71,30 @@ router.get("/:id", async (req: Request, res: Response<WithId<Flower>[]>) => {
 
 router.post("/", async (req: Request, res: Response) => {
   const newFlower: Flower = req.body;
-  const insertedFlower = await insertFlower(newFlower);
-
-  if (insertedFlower == null) {
-    res.sendStatus(400);
-    return;
+  if (newFlower.name && newFlower.image && newFlower.amountInStock && newFlower.price){  
+    await insertFlower(newFlower);
+    res.sendStatus(201);
   }
-
-  console.log("Detta är body: ", newFlower);
-  res.sendStatus(201);
+  else{
+    res.sendStatus(400)
+  }
 });
 
 router.put("/:id", async (req: Request, res: Response) => {
   try {
   const id: string = req.params.id;
+  if (!ObjectId.isValid(id)) {
+    return res.sendStatus(400)
+  }
   const objectId: ObjectId = new ObjectId(id);
   const updatedFields: Flower = req.body;
-  await updateFlower(objectId, updatedFields);
-   if (!updateFlower){
+  const result: UpdateResult<Flower> | undefined = await updateFlower(objectId, updatedFields);
+   if (result?.upsertedCount === 0){
     return res.sendStatus(404)
   }
-  res.sendStatus(201);
+  else {
+    res.sendStatus(201);
+  }
 } catch (error){
   console.error(" wrong with update the flower")
   res.sendStatus(500)

@@ -13,13 +13,8 @@ export async function insertCarts(cart: Cart) : Promise<ObjectId | null>{
     const client: MongoClient = new MongoClient(con)
     const db : Db = await client.db("flowerProduct")
     const collection: Collection <Cart> = db.collection<Cart>('carts')
-    
 
     const result: InsertOneResult<Cart> = await collection.insertOne(cart)
-    console.log(result)
-    if (!result.acknowledged){
-        console.log('Could not insert cart.')
-        return null
-    }
+
     return result.insertedId
 }

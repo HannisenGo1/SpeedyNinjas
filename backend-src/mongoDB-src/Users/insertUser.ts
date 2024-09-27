@@ -15,13 +15,7 @@ export async function insertUser(user: User) : Promise<ObjectId | null>{
     const db : Db = await client.db("flowerProduct")
     const collection: Collection <User> = db.collection<User>('users')
 
- 
-
     const result: InsertOneResult<User> = await collection.insertOne(user)
-    console.log(result)
-    if (!result.acknowledged){
-        console.log('Could not insert User.')
-        return null
-    }
+
     return result.insertedId
 }

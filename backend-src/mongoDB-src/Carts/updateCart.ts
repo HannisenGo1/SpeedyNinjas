@@ -21,6 +21,6 @@ export async function updateCart(index: ObjectId, body: Object) {
         
     } 
     console.log(`deleted: ${result.upsertedCount}`);
-    
+    return result
 }
 

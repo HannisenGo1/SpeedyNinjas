@@ -1,6 +1,6 @@
 
 import express, { Request, Response, Router } from 'express'
-import { WithId, ObjectId } from 'mongodb'
+import { WithId, ObjectId, UpdateResult } from 'mongodb'
 import { User } from '../Interfaces/user.js'
 import { getAllUsers } from '../mongoDB-src/Users/getAllUsers.js' 
 import { insertUser } from '../mongoDB-src/Users/insertUser.js' 
@@ -54,11 +54,16 @@ router.get('/', async (req:Request, res:Response<WithId<User>[]> ) =>{
   router.get('/:id', async (req:Request, res:Response<WithId<User>[]> ) =>{
     try {
         const id: string = req.params.id
+        
+        if (!ObjectId.isValid(id)) {
+          return res.sendStatus(400)
+        }
         const objectId: ObjectId = new ObjectId(id)
         const oneUser: WithId<User> [] = await getOneUser(objectId)
-        if (!oneUser) {
-    return res.sendStatus(404)
-    }
+
+        if (oneUser.length < 1 ) {
+          return res.sendStatus(404)
+        }
      res.send(oneUser) 
     } catch (error) {
     console.error("couldnt fetch user", error)
@@ -68,28 +73,36 @@ router.get('/', async (req:Request, res:Response<WithId<User>[]> ) =>{
 
   router.post('/', async (req: Request, res: Response) => {
     const newUser: User = req.body
-    const insertedUser =  await insertUser(newUser)
-    
-    if(insertedUser == null){
-      res.sendStatus(400)
-      return
+    // const isadminstring = String(newUser.isAdmin)
+    if(newUser.hasOwnProperty('isAdmin') && newUser.name ){
+      await insertUser(newUser)
+      res.sendStatus(201)
     }
-  
-    console.log("Detta är body: ", newUser);
-    res.sendStatus(201)
+    else{
+      res.sendStatus(400)
+    }
   })
 
   router.put('/:id', async (req: Request, res: Response) => {
     try {
         const id: string = req.params.id
+        
+        if (!ObjectId.isValid(id)) {
+          return res.sendStatus(400)
+        }
         const objectId: ObjectId = new ObjectId(id)
       
         const updatedFields: User = req.body
-        await updateUser(objectId, updatedFields)
-    if (!updateUser) {
-    return res.sendStatus(404)
-    }
-        res.sendStatus(201)
+        const result: UpdateResult<User> | undefined = await updateUser(objectId, updatedFields)
+
+         if (result?.upsertedCount === 0) {
+            return res.sendStatus(404)
+         }else {
+
+          return res.sendStatus(201)
+         }
+
+
       } catch (error) {
     console.error("wrong with update user")
     res.sendStatus(500)

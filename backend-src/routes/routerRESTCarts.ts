@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from 'express'
-import { WithId, ObjectId } from 'mongodb'
+import { WithId, ObjectId, UpdateResult } from 'mongodb'
 import { Cart } from '../Interfaces/cart.js'
 import { getAllCarts } from '../mongoDB-src/Carts/getAllCarts.js' 
 import { insertCarts } from '../mongoDB-src/Carts/insertCarts.js' 
@@ -25,10 +25,13 @@ router.get('/', async (req:Request, res:Response<WithId<Cart>[]> ) =>{
 
 router.get('/:id', async (req:Request, res:Response<WithId<Cart>[]> ) =>{
   try {
-  const id: string = req.params.id
-  const objectId: ObjectId = new ObjectId(id)
+    const id: string = req.params.id;
+    if (!ObjectId.isValid(id)) {
+      return res.sendStatus(400)
+    }
+    const objectId: ObjectId = new ObjectId(id);
   const oneCart: WithId<Cart> [] = await getOneCart(objectId)
-  if (!oneCart) {
+  if (oneCart.length < 1) {
     return res.sendStatus(404)
   }
    res.send(oneCart) 
@@ -41,32 +44,37 @@ router.get('/:id', async (req:Request, res:Response<WithId<Cart>[]> ) =>{
 
 router.post('/', async (req: Request, res: Response) => {
   const newCart: Cart = req.body
-  const insertedCart =  await insertCarts(newCart)
-  
-  if(insertedCart == null){
-    res.sendStatus(400)
-    return
+  if (newCart.amount){
+    await insertCarts(newCart)
+    res.sendStatus(201)
   }
-
-  console.log("Detta är body: ", newCart);
-  res.sendStatus(201)
+  else{
+    res.sendStatus(400)
+  }
 });
 
 router.put('/:id', async (req: Request, res: Response) => {
   try {
   const id: string = req.params.id
+
+  if (!ObjectId.isValid(id)) {
+    return res.sendStatus(400)
+  }
   const objectId: ObjectId = new ObjectId(id)
 
   const updatedFields: Cart = req.body
-  await updateCart(objectId, updatedFields)
-  if (!updateCart) {
+  const result: UpdateResult<Cart> | undefined = await updateCart(objectId, updatedFields)
+  if (result?.upsertedCount === 0) {
     return res.sendStatus(404)
-  }
-  res.sendStatus(201)
-  } catch (error) {
-    console.error("Wrong with update the cart")
-    res.sendStatus(500)
-  }
+ }else {
+
+  return res.sendStatus(201)
+ }
+
+} catch (error) {
+console.error("wrong with update cart")
+res.sendStatus(500)
+}
 });
 
 router.delete("/:id", async (req: Request, res: Response) => {
