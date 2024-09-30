@@ -10,18 +10,19 @@ export const con: string | undefined = process.env.CONNECTION_STRING
 
 const app: Express = express()
 const port = 1000
-app.use( express.json() )
 
+app.use( express.json() )
+ 
 
 app.use('/', (req: Request, res: Response, next: NextFunction) => {
 	console.log(`${req.method}  ${req.url} `, req.body)
 	next()
 })
 
-// ** unkomment for test of database
-resetDatabase() 
+// ** unkomment for reset of database
+//resetDatabase() 
 
-
+app.use('/', express.static('./frontend'));
 
 app.use("/flowers", flowerRouter)
 app.use("/carts", cartRouter)
