@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title> Blom affär </title>
 	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&family=Playwrite+CU:wght@100..400&display=swap" rel="stylesheet">
 	<script type="module" src="script.js"></script>
 </head>
+
 <body>
-	<h1> Blommor </h1>
+	<div class="frontpage-flex">
+		<h1 class="headline"> Blommor </h1>
 
-	<input class="search-bar" type="text" placeholder="Sök..."/>
-	<button id="search-button">Sök</button>
+		<div class="search-container">
+			<input class="search-bar" type="text" placeholder="Sök..." />
+			<button id="search-button">Sök</button>
+		</div>
 
-	<button id="get-flower"> Hämta blommor</button>
+		<button id="get-flower"> Hämta blommor</button>
 
-	<ul class="product-list"></ul>
+		<ul class="product-list"></ul>
+	</div>
 </body>
+
 </html>

@@ -1,19 +1,61 @@
 body {
-    background-color: bisque;
+    /* background-color: bisque; */
+    background-image: url("https://static1.backyardbossimages.com/wordpress/wp-content/uploads/2023/03/Shutterstock_92976838.jpg");
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+.frontpage-flex{
+    display: flex;
+    flex-direction: column;
+}
+
+.headline{
+    margin: auto;
+    padding: 0.5em;
+    background-color: rgb(246, 236, 236, 75%);
+    width: fit-content;
+    border-radius: 2em;
+    text-align: center;
+    font-family: 'Playwrite CU'
+}
+
+.search-container{
+    margin: auto;
+    margin-top: 1em;
+}
+
+#get-flower{
+    margin: auto;
+    margin-top: 1em;
+    width: fit-content;
 }
 
 .product-list{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    
 }
 
 .flower-card, .flower-card-s {
+background-color: rgb(188, 213, 234);
+border: 4px ridge rgb(255, 146, 150);
+border-radius: 0.5em;
 display: flex;
 flex-direction: column;
 justify-content: space-around;
+margin: 1em;
+
+    h2{
+        font-family: 'Merienda';
+        margin: auto;
+    }
 
     img {
+        margin: auto;
         max-width: 100px;
+    }
+
+    p{
+        margin: auto;
     }
 }

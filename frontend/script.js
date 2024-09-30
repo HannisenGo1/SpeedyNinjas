@@ -37,7 +37,7 @@ async function getFlowers() {
 }
 
 function removeFlowers() {
-  const existingFlowers = document.querySelectorAll('div')
+  const existingFlowers = document.querySelectorAll('.product-list > div')
 
   existingFlowers.forEach(flower => {
     flower.remove()
