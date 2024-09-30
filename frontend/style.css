@@ -5,4 +5,15 @@ body {
 .product-list{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    
+}
+
+.flower-card {
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+
+    img {
+        max-width: 100px;
+    }
 }
