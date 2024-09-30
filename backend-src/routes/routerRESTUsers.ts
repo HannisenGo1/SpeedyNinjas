@@ -8,6 +8,7 @@ import { updateUser } from '../mongoDB-src/Users/updateUser.js'
 import { deleteUser } from '../mongoDB-src/Users/deleteUser.js'
 import { getOneUser } from '../mongoDB-src/Users/getOneUser.js'
 import { searchUser } from '../mongoDB-src/Users/searchUser.js'
+import { isValidUser } from '../data/validation.js'
 
 export const router: Router = express.Router()
 
@@ -74,7 +75,7 @@ router.get('/', async (req:Request, res:Response<WithId<User>[]> ) =>{
   router.post('/', async (req: Request, res: Response) => {
     const newUser: User = req.body
     // const isadminstring = String(newUser.isAdmin)
-    if(newUser.hasOwnProperty('isAdmin') && newUser.name ){
+    if(isValidUser(newUser)){
       await insertUser(newUser)
       res.sendStatus(201)
     }

@@ -7,6 +7,7 @@ import { updateFlower } from "../mongoDB-src/Flowers/updateFlower.js";
 import { deleteFlower } from "../mongoDB-src/Flowers/deleteFlower.js";
 import { getOneFlower } from "../mongoDB-src/Flowers/getOneFlower.js";
 import { searchFlower } from "../mongoDB-src/Flowers/searchFlower.js";
+import { isValidFlower } from '../data/validation.js'
 
 export const router: Router = express.Router();
 
@@ -71,7 +72,7 @@ router.get("/:id", async (req: Request, res: Response<WithId<Flower>[]>) => {
 
 router.post("/", async (req: Request, res: Response) => {
   const newFlower: Flower = req.body;
-  if (newFlower.name && newFlower.image && newFlower.amountInStock && newFlower.price){  
+  if (isValidFlower(newFlower)){  
     await insertFlower(newFlower);
     res.sendStatus(201);
   }

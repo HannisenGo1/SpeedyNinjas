@@ -6,7 +6,7 @@ import { insertCarts } from '../mongoDB-src/Carts/insertCarts.js'
 import { deleteCart } from '../mongoDB-src/Carts/deleteCart.js' 
 import { updateCart } from '../mongoDB-src/Carts/updateCart.js' 
 import { getOneCart } from '../mongoDB-src/Carts/getOneCart.js'
-
+import { isValidCart, isValidFlower, isValidUser } from '../data/validation.js'
 
 export const router: Router = express.Router()
 
@@ -44,7 +44,7 @@ router.get('/:id', async (req:Request, res:Response<WithId<Cart>[]> ) =>{
 
 router.post('/', async (req: Request, res: Response) => {
   const newCart: Cart = req.body
-  if (newCart.amount){
+  if (isValidCart(newCart)){
     await insertCarts(newCart)
     res.sendStatus(201)
   }
@@ -72,7 +72,7 @@ router.put('/:id', async (req: Request, res: Response) => {
  }
 
 } catch (error) {
-console.error("wrong with update cart")
+console.error("Error updating cart")
 res.sendStatus(500)
 }
 });
