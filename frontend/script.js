@@ -1,5 +1,7 @@
 import { addToCart, renderCart } from './cartScript.js'; 
+import { logIn } from './login.js';
 
+const loginBtn = document.querySelector(".login-btn")
 const flowerButton = document.querySelector('#get-flower');
 const searchInput = document.querySelector('.search-bar');
 const searchButton = document.querySelector('#search-button')
@@ -119,3 +121,8 @@ searchButton.addEventListener('click', async () => {
 document.getElementById('switchButton').addEventListener('click', handleSwitchView);
 updateView();
 
+loginBtn.addEventListener("click", () =>{
+    logIn()
+})
+
+export {removeFlowers, getFlowers}
