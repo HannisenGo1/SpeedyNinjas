@@ -3,6 +3,7 @@ const productDiv = document.querySelector('.product-list');
 const loginBtn = document.querySelector(".login-btn")
 
 let loggedIn = false
+let whoIsLoggedIn
 
 
 export async function logIn() {
@@ -33,10 +34,11 @@ export async function logIn() {
                 
                 if(user.name.toLowerCase() === userInput.value.toLowerCase()) {
                     OKuser = true
-                    
+                    whoIsLoggedIn = user._id
                 }else {
                     const wrongUser = document.createElement("p")
                     wrongUser.innerText = "Fel användarnamn."
+                    
                     productDiv.appendChild(wrongUser)
                 }
             })
@@ -65,3 +67,4 @@ function removeLogin() {
 }
 
 
+export {whoIsLoggedIn, loggedIn}
