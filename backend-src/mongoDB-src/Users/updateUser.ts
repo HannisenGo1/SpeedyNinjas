@@ -19,6 +19,6 @@ export async function updateUser(index: ObjectId, body: Object) {
         console.log("Did not find a matching dokument");
         return
     } 
-    console.log(`deleted: ${result.upsertedCount}`);
+    console.log(`updated: ${result.matchedCount}`);
     return result
 }

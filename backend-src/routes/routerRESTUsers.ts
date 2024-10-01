@@ -96,11 +96,11 @@ router.get('/', async (req:Request, res:Response<WithId<User>[]> ) =>{
         const updatedFields: User = req.body
         const result: UpdateResult<User> | undefined = await updateUser(objectId, updatedFields)
 
-         if (result?.upsertedCount === 0) {
+         if (result?.matchedCount === 0) {
             return res.sendStatus(404)
          }else {
 
-          return res.sendStatus(201)
+          return res.sendStatus(204)
          }
 
 

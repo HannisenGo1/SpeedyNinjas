@@ -20,7 +20,7 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
 })
 
 // ** unkomment for reset of database
-resetDatabase() 
+// resetDatabase() 
 
 app.use('/', express.static('./frontend'));
 

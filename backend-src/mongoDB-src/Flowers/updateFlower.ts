@@ -13,13 +13,15 @@ export async function updateFlower(index: ObjectId, body: Object) {
     const db : Db = await client.db("flowerProduct")
     const collection: Collection <Flower> = db.collection<Flower>('flowers')
     const filter = {_id: index}
-
+    console.log("Filter i uppdate",filter, "body: ", body);
+    
     const result: UpdateResult<Flower>  = await collection.updateOne(filter, {$set: body })
+    
     if (!result.acknowledged) {
         console.log("Did not find a matching dokument");
         return
         
     } 
-    console.log(`deleted: ${result.upsertedCount}`);
+    console.log(`updated: ${result.matchedCount}`);
     return result
 }

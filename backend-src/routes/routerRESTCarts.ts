@@ -64,11 +64,11 @@ router.put('/:id', async (req: Request, res: Response) => {
 
   const updatedFields: Cart = req.body
   const result: UpdateResult<Cart> | undefined = await updateCart(objectId, updatedFields)
-  if (result?.upsertedCount === 0) {
+  if (result?.matchedCount === 0) {
     return res.sendStatus(404)
  }else {
 
-  return res.sendStatus(201)
+  return res.sendStatus(204)
  }
 
 } catch (error) {

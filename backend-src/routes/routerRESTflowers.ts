@@ -89,12 +89,15 @@ router.put("/:id", async (req: Request, res: Response) => {
   }
   const objectId: ObjectId = new ObjectId(id);
   const updatedFields: Flower = req.body;
+  console.log(req.body, "objId: ", objectId);
+
+  
   const result: UpdateResult<Flower> | undefined = await updateFlower(objectId, updatedFields);
-   if (result?.upsertedCount === 0){
+   if (result?.matchedCount === 0){
     return res.sendStatus(404)
   }
   else {
-    res.sendStatus(201);
+    res.sendStatus(204);
   }
 } catch (error){
   console.error(" wrong with update the flower")

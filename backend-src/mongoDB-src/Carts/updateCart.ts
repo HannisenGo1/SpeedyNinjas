@@ -20,7 +20,7 @@ export async function updateCart(index: ObjectId, body: Object) {
         return
         
     } 
-    console.log(`deleted: ${result.upsertedCount}`);
+    console.log(`updated: ${result.matchedCount}`);
     return result
 }
 
