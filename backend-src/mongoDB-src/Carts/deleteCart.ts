@@ -10,17 +10,27 @@ export async function deleteCart(index: ObjectId) {
     }
     
     const client: MongoClient = new MongoClient(con)
+    try {
 
-    const db : Db = await client.db("flowerProduct")
-    const collection: Collection <Cart> = db.collection<Cart>('carts')
-    const filter = {_id: index}
+        const db : Db = await client.db("flowerProduct")
+        const collection: Collection <Cart> = db.collection<Cart>('carts')
+        const filter = {_id: index}
+    
+        const result: DeleteResult = await collection.deleteOne(filter)
+        if (!result.acknowledged) {
+            console.log("Did not find a matching dokument");
+            return
+    
+        } 
+      
+        console.log(`deleted: ${result.deletedCount}`);
+    }catch (error) {
+        console.error('Error fetching Carts', error);
+        throw error;
+    }finally {
+        await client.close()
 
-    const result: DeleteResult = await collection.deleteOne(filter)
-    if (!result.acknowledged) {
-        console.log("Did not find a matching dokument");
-        return
+    }
 
-    } 
-    console.log(`deleted: ${result.deletedCount}`);
     
 }

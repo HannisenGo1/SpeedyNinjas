@@ -9,17 +9,25 @@ export async function deleteUser(index: ObjectId) {
     }
     
     const client: MongoClient = new MongoClient(con)
+    try {
+        const db : Db = await client.db("flowerProduct")
+        const collection: Collection <User> = db.collection<User>('users')
+        const filter = {_id: index}
+    
+        const result: DeleteResult = await collection.deleteOne(filter)
+        if (!result.acknowledged) {
+            console.log("Did not find a matching dokument");
+            return
+            
+        } 
+        console.log(`deleted: ${result.deletedCount}`);
 
-    const db : Db = await client.db("flowerProduct")
-    const collection: Collection <User> = db.collection<User>('users')
-    const filter = {_id: index}
+    }catch (error) {
+        console.error('Error fetching Users', error);
+        throw error;
+    }finally {
+        await client.close()
 
-    const result: DeleteResult = await collection.deleteOne(filter)
-    if (!result.acknowledged) {
-        console.log("Did not find a matching dokument");
-        return
-        
-    } 
-    console.log(`deleted: ${result.deletedCount}`);
+    }
     
 }

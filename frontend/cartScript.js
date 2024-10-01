@@ -54,7 +54,7 @@ export const renderCart = () => {
 
 async function loggedInCart() {
   const responseCart = await fetch('/carts', { method: 'GET' })
-  const responseUsers = await fetch('/users', { method: 'GET' })
+
   const responseFlowers = await fetch('/flowers', { method: 'GET' })
   cart = await responseCart.json()
   let users = await responseUsers.json()

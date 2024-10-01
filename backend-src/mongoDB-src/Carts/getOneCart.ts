@@ -11,17 +11,26 @@ export async function getOneCart(id: ObjectId): Promise<WithId<Cart>[]> {
         throw new Error("No connection!")
     }
         const client: MongoClient = new MongoClient(con)
-        const db : Db = await client.db("flowerProduct")
-        const collection: Collection <Cart> = db.collection<Cart>('carts')
+        try {
+            const db : Db = await client.db("flowerProduct")
+            const collection: Collection <Cart> = db.collection<Cart>('carts')
+    
+            const filter = {_id: id}
+            const cursor: FindCursor <WithId<Cart>> = collection.find(filter)
+            const found: WithId<Cart>[] = await cursor.toArray()
+            
+            if(found.length < 1) {
+                console.log( "No Cart awailable today :/");
+            
+            }
+            
+            return found
 
-        const filter = {_id: id}
-        const cursor: FindCursor <WithId<Cart>> = collection.find(filter)
-        const found: WithId<Cart>[] = await cursor.toArray()
-        
-        if(found.length < 1) {
-            console.log( "No Cart awailable today :/");
-        
+        }catch (error) {
+            console.error('Error fetching Carts', error);
+            throw error;
+        }finally {
+            await client.close()
+    
         }
-        
-        return found
 }

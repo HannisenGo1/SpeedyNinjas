@@ -11,10 +11,18 @@ export async function insertFlower(flower: Flower) : Promise<ObjectId | null>{
         throw new Error("No connection!")
     }
     const client: MongoClient = new MongoClient(con)
-    const db : Db = await client.db("flowerProduct")
-    const collection: Collection <Flower> = db.collection<Flower>('flowers')
+    try {
+        const db : Db = await client.db("flowerProduct")
+        const collection: Collection <Flower> = db.collection<Flower>('flowers')
+            
+        const result: InsertOneResult<Flower> = await collection.insertOne(flower)
+        return result.insertedId
         
-    const result: InsertOneResult<Flower> = await collection.insertOne(flower)
+    }catch (error) {
+        console.error('Error fetching flowers', error);
+        throw error;
+    }finally {
+        await client.close()
 
-    return result.insertedId
+    }
 }
