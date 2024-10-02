@@ -11,10 +11,18 @@ export async function insertCarts(cart: Cart) : Promise<ObjectId | null>{
         throw new Error("No connection!")
     }
     const client: MongoClient = new MongoClient(con)
-    const db : Db = await client.db("flowerProduct")
-    const collection: Collection <Cart> = db.collection<Cart>('carts')
+    try {
+        const db : Db = await client.db("flowerProduct")
+        const collection: Collection <Cart> = db.collection<Cart>('carts')
+    
+        const result: InsertOneResult<Cart> = await collection.insertOne(cart)
+        return result.insertedId
+        
+    }catch (error) {
+        console.error('Error fetching Carts', error);
+        throw error;
+    }finally {
+        await client.close()
 
-    const result: InsertOneResult<Cart> = await collection.insertOne(cart)
-
-    return result.insertedId
+    }
 }

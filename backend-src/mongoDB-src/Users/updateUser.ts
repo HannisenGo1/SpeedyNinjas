@@ -9,16 +9,26 @@ export async function updateUser(index: ObjectId, body: Object) {
     }
     
     const client: MongoClient = new MongoClient(con)
+    try {
 
-    const db : Db = await client.db("flowerProduct")
-    const collection: Collection <User> = db.collection<User>('users')
-    const filter = {_id: index}
+        const db : Db = await client.db("flowerProduct")
+        const collection: Collection <User> = db.collection<User>('users')
+        const filter = {_id: index}
+    
+        const result: UpdateResult<User>  = await collection.updateOne(filter, {$set: body })
+        if (!result.acknowledged) {
+            console.log("Did not find a matching dokument");
+            return
+        } 
+        console.log(`deleted: ${result.upsertedCount}`);
+        return result
+    }catch (error) {
+        console.error('Error fetching Users', error);
+        throw error;
+    }finally {
+        await client.close()
 
-    const result: UpdateResult<User>  = await collection.updateOne(filter, {$set: body })
-    if (!result.acknowledged) {
-        console.log("Did not find a matching dokument");
-        return
-    } 
-    console.log(`updated: ${result.matchedCount}`);
-    return result
+    }
+
+
 }

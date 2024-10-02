@@ -12,17 +12,25 @@ export async function getOneFlower(id: ObjectId): Promise<WithId<Flower>[]> {
         throw new Error("No connection!")
     }
         const client: MongoClient = new MongoClient(con)
-        const db : Db = await client.db("flowerProduct")
-        const collection: Collection <Flower> = db.collection<Flower>('flowers')
+        try {
+            const db : Db = await client.db("flowerProduct")
+            const collection: Collection <Flower> = db.collection<Flower>('flowers')
+    
+            const filter = {_id: id}
+            const cursor: FindCursor <WithId<Flower>> = collection.find(filter)
+            const found: WithId<Flower>[] = await cursor.toArray()
+            
+            if(found.length < 1) {
+                console.log( "No Flower awailable today :/");
+            
+            }
+            return found
+            
+        }catch (error) {
+            console.error('Error fetching flowers', error);
+            throw error;
+        }finally {
+            await client.close()
 
-        const filter = {_id: id}
-        const cursor: FindCursor <WithId<Flower>> = collection.find(filter)
-        const found: WithId<Flower>[] = await cursor.toArray()
-        
-        if(found.length < 1) {
-            console.log( "No Flower awailable today :/");
-        
         }
-        
-        return found
 }
