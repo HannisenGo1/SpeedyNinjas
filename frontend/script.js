@@ -36,28 +36,13 @@ const renderHome = () => {
 
 
 async function getFlowers() {
-  // try {
-  //   const response = await fetch('/flowers', { method: 'GET' });
-  //   if (!response.ok) {
-  //     console.error("Failed to fetch flowers:", response.status);
-  //   }
-  //   const flowersData = await response.json();
-  //   console.log('Svar från servern: ', flowersData)
-    const flowersData = [{_id: "66fba267cf1b2b54a823f83d",
-      name:"Rose",
-      price: 15.99,
-      image: "https://cdn.sanity.io/images/pn4rwssl/production/349d734442fdbcc734bd8060f126330fdf19e825-500x750.jpg?w=2880&q=75&auto=format",
-      amountInStock:30},
-     {_id: "66fba267cf1b2b54a823f83d",
-      name:"Rose",
-      price: 15.99,
-      image: "https://cdn.sanity.io/images/pn4rwssl/production/349d734442fdbcc734bd8060f126330fdf19e825-500x750.jpg?w=2880&q=75&auto=format",
-      amountInStock:30},
-      {_id:" 66fba267cf1b2b54a823f83d",
-      name:"Rose",
-      price: 15.99,
-      image: "https://cdn.sanity.io/images/pn4rwssl/production/349d734442fdbcc734bd8060f126330fdf19e825-500x750.jpg?w=2880&q=75&auto=format",
-      amountInStock:30}]
+  try {
+    const response = await fetch('/flowers', { method: 'GET' });
+    if (!response.ok) {
+      console.error("Failed to fetch flowers:", response.status);
+    }
+    const flowersData = await response.json();
+    console.log('Svar från servern: ', flowersData)
     
     flowersData.forEach(flower => {
       const flowerDiv = document.createElement('div')
@@ -80,9 +65,9 @@ async function getFlowers() {
       flowerDiv.appendChild(addButton);
       productDiv.appendChild(flowerDiv)
     });
-//   } catch (error) {
-//     console.error("Error fetching flowers:", error);
-//   }
+  } catch (error) {
+    console.error("Error fetching flowers:", error);
+  }
 }
 
 function removeFlowers() {

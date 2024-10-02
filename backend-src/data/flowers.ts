@@ -122,3 +122,20 @@ export const flowers: Flower[] = [
         amountInStock: 40
       }
     ]
+
+    // DeveloperData for styling. 
+      // const flowersData = [{_id: "66fba267cf1b2b54a823f83d",
+    //   name:"Rose",
+    //   price: 15.99,
+    //   image: "https://cdn.sanity.io/images/pn4rwssl/production/349d734442fdbcc734bd8060f126330fdf19e825-500x750.jpg?w=2880&q=75&auto=format",
+    //   amountInStock:30},
+    //  {_id: "66fba267cf1b2b54a823f83d",
+    //   name:"Rose",
+    //   price: 15.99,
+    //   image: "https://cdn.sanity.io/images/pn4rwssl/production/349d734442fdbcc734bd8060f126330fdf19e825-500x750.jpg?w=2880&q=75&auto=format",
+    //   amountInStock:30},
+    //   {_id:" 66fba267cf1b2b54a823f83d",
+    //   name:"Rose",
+    //   price: 15.99,
+    //   image: "https://cdn.sanity.io/images/pn4rwssl/production/349d734442fdbcc734bd8060f126330fdf19e825-500x750.jpg?w=2880&q=75&auto=format",
+    //   amountInStock:30}]

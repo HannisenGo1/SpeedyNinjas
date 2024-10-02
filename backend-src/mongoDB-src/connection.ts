@@ -1,5 +1,5 @@
 import { MongoClient, Db, Collection, Document } from "mongodb"
-import { Flower } from "../Interfaces/product.js";
+
 
 export const con: string | undefined = process.env.CONNECTION_STRING
 

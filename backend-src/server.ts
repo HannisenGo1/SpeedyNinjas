@@ -5,9 +5,6 @@ import { router as userRouter } from './routes/routerRESTUsers.js'
 import { resetDatabase } from './mongoDB-src/resetDatabase.js'
 
 
-
-export const con: string | undefined = process.env.CONNECTION_STRING
-
 const app: Express = express()
 const port = 1000
 
@@ -29,7 +26,6 @@ app.use("/carts", cartRouter)
 app.use("/users", userRouter)
 
 
-// starta servern
 app.listen(port, () => {
 	console.log('Server is listening on port ' + port)
 })
