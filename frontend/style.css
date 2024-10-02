@@ -10,6 +10,7 @@ body {
      
 }
 
+
 button {
     padding: 0.4em;
     margin: 0.5em;
@@ -101,10 +102,19 @@ button:hover {
      
     
 }
-.cart-card {
-  /*  display: flex;
+.login-div {
+    display: flex;
     flex-direction: column;
-    justify-content: space-around; */
+    justify-content: space-around;
+    place-self: center;
+    position: absolute;
+    margin-top:2em;
+    background-color:  rgb(75, 49, 12);
+    padding: 1em;
+    border-radius: 1em;
+    top: 15em;
+}
+.cart-card {
     background-image: url("https://images-ext-1.discordapp.net/external/zegNwvOOOcQndldDyt64skj-vmL2fI3onscbsriBSPc/https/t3.ftcdn.net/jpg/02/69/57/12/360_F_269571249_2Y3aTKkr0734y3q8KY7MWwdLPoyBKOlC.jpg?format=webp&width=675&height=450");
     color: rgb(240, 181, 132);
     border: 4px ridge rgb(124, 81, 21);

@@ -8,7 +8,7 @@ import { updateUser } from '../mongoDB-src/Users/updateUser.js'
 import { deleteUser } from '../mongoDB-src/Users/deleteUser.js'
 import { getOneUser } from '../mongoDB-src/Users/getOneUser.js'
 import { searchUser } from '../mongoDB-src/Users/searchUser.js'
-import { isValidUser } from '../data/validation.js'
+import { isValidUser, isValidUserPUT } from '../data/validation.js'
 
 export const router: Router = express.Router()
 
@@ -94,14 +94,22 @@ router.get('/', async (req:Request, res:Response<WithId<User>[]> ) =>{
         const objectId: ObjectId = new ObjectId(id)
       
         const updatedFields: User = req.body
-        const result: UpdateResult<User> | undefined = await updateUser(objectId, updatedFields)
+        if(isValidUserPUT(updatedFields)) {
+          const result: UpdateResult<User> | undefined = await updateUser(objectId, updatedFields)
+  
+           if (result?.matchedCount === 0) {
+              return res.sendStatus(404)
+           }else {
+  
+            return res.sendStatus(204)
+           }
 
-         if (result?.matchedCount === 0) {
-            return res.sendStatus(404)
-         }else {
 
-          return res.sendStatus(204)
-         }
+        }
+
+        else{
+          return res.sendStatus(400)
+        }
 
 
       } catch (error) {

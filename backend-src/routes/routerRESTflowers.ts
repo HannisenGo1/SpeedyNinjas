@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import { ObjectId, WithId, UpdateResult } from "mongodb";
+import { ObjectId, WithId, UpdateResult, ReturnDocument } from "mongodb";
 import { Flower } from "../Interfaces/product.js";
 import { getAllFlowers } from "../mongoDB-src/Flowers/getAllFlowers.js";
 import { insertFlower } from "../mongoDB-src/Flowers/insertFlower.js";
@@ -7,7 +7,7 @@ import { updateFlower } from "../mongoDB-src/Flowers/updateFlower.js";
 import { deleteFlower } from "../mongoDB-src/Flowers/deleteFlower.js";
 import { getOneFlower } from "../mongoDB-src/Flowers/getOneFlower.js";
 import { searchFlower } from "../mongoDB-src/Flowers/searchFlower.js";
-import { isValidFlower } from '../data/validation.js'
+import { isValidFlower, isValidFlowerPUT } from '../data/validation.js'
 
 export const router: Router = express.Router();
 
@@ -90,15 +90,22 @@ router.put("/:id", async (req: Request, res: Response) => {
   const objectId: ObjectId = new ObjectId(id);
   const updatedFields: Flower = req.body;
   console.log(req.body, "objId: ", objectId);
-
   
-  const result: UpdateResult<Flower> | undefined = await updateFlower(objectId, updatedFields);
-   if (result?.matchedCount === 0){
-    return res.sendStatus(404)
+  //Lägg in ett JOI-schema som har optionall.
+  if(isValidFlowerPUT(updatedFields)){
+    const result: UpdateResult<Flower> | undefined = await updateFlower(objectId, updatedFields);
+    
+    if (result?.matchedCount === 0){
+     return res.sendStatus(404)
+   }
+   else {
+     res.sendStatus(204);
+   }
   }
-  else {
-    res.sendStatus(204);
+  else{
+    res.sendStatus(400)
   }
+  
 } catch (error){
   console.error(" wrong with update the flower")
   res.sendStatus(500)

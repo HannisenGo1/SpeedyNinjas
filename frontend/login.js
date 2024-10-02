@@ -4,7 +4,7 @@ const loginBtn = document.querySelector(".login-btn")
 
 let loggedIn = false
 let whoIsLoggedIn
-
+let wrongUser = document.createElement("p")
 
 export async function logIn() {
     const response = await fetch('/users', { method: 'GET' });
@@ -18,6 +18,7 @@ export async function logIn() {
         removeFlowers()
         
         const loginwindow = document.createElement("div")
+        loginwindow.classList.add("login-div")
         const user = document.createElement("p")
         const userInput = document.createElement("input")
         const loginbutton = document.createElement("button")
@@ -36,10 +37,9 @@ export async function logIn() {
                     OKuser = true
                     whoIsLoggedIn = user._id
                 }else {
-                    const wrongUser = document.createElement("p")
                     wrongUser.innerText = "Fel användarnamn."
                     
-                    productDiv.appendChild(wrongUser)
+                    loginwindow.appendChild(wrongUser)
                 }
             })
             if (OKuser) {
