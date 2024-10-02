@@ -2,7 +2,7 @@ import { MongoClient, Db, Collection, FindCursor, WithId } from "mongodb";
 import { Cart } from "../../Interfaces/cart.js";
 import { Flower } from "../../Interfaces/product.js";
 import { User } from "../../Interfaces/user.js";
-import { con } from "../../server.js";
+import { con } from "../connection.js";
 
 export async function createCarts(): Promise<WithId<Cart>[]> {
 

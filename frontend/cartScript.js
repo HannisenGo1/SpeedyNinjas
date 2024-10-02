@@ -2,10 +2,14 @@ import { whoIsLoggedIn, loggedIn } from "./login.js";
 
 let cart = [];
 let totalPrice = 0;
-
+ 
 
 export const addToCart = (flower) => {
   cart.push(flower);
+  console.log(totalPrice);
+  totalPrice += flower.price;
+
+  
 };
 
 
@@ -41,10 +45,12 @@ export const renderCart = () => {
       });
 
     cartDiv.appendChild(cartList);
-    totalPrice += flower.price;
+   
   const priceDiv = document.createElement('div')
+  const priceP = document.createElement('p')
   priceDiv.classList.add('total-price-div')
-  priceDiv.innerHtml= ' <h2> Totala pris: ${totalPrice} kronor </h2>'
+  priceP.innerText = "Totala pris: " +  totalPrice.toFixed(2)
+  priceDiv.appendChild(priceP)
   cartDiv.appendChild(priceDiv)
   }
 

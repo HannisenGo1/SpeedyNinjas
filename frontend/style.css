@@ -76,16 +76,37 @@ button:hover {
 }
 .divcart {
     color: black;
+    display: grid;
+    grid-template-columns: 1fr;
+
 }
 #viewContainer{
     text-align: center;
+}
+
+.total-price-div{
+    /* display:flex; */
+    color: rgb(240, 181, 132);
+    border: 4px ridge rgb(124, 81, 21);
+    border-radius: 0.5em;
+    box-shadow: 2px 2px 15px 5px rgb(56, 82, 15);
+    width:10em;
+    height: 3em;
+    place-self: center;
+    background-color: rgb(75, 49, 12);
+    margin-bottom: 0.5em;
+        p{
+           text-align: center;
+        }
+     
+    
 }
 .cart-card {
   /*  display: flex;
     flex-direction: column;
     justify-content: space-around; */
     background-image: url("https://images-ext-1.discordapp.net/external/zegNwvOOOcQndldDyt64skj-vmL2fI3onscbsriBSPc/https/t3.ftcdn.net/jpg/02/69/57/12/360_F_269571249_2Y3aTKkr0734y3q8KY7MWwdLPoyBKOlC.jpg?format=webp&width=675&height=450");
-
+    color: rgb(240, 181, 132);
     border: 4px ridge rgb(124, 81, 21);
     border-radius: 0.5em;
     box-shadow: 2px 2px 15px 5px rgb(56, 82, 15);
@@ -108,7 +129,6 @@ button:hover {
     p{
         margin: auto;
         margin-top:0.5em;
-        background-color:black;
         font-size:1.2em;
         margin-bottom:0.3em;
     }
