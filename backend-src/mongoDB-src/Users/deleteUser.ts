@@ -1,6 +1,7 @@
 import { Collection, Db, DeleteResult, MongoClient, ObjectId } from "mongodb";
 import { User } from "../../Interfaces/user.js";
 import { con } from '../../server.js'
+import { connectToDatabase } from "../connection.js";
 
 export async function deleteUser(index: ObjectId) {
     if(!con) {
@@ -10,10 +11,9 @@ export async function deleteUser(index: ObjectId) {
     
     const client: MongoClient = new MongoClient(con)
     try {
-        const db : Db = await client.db("flowerProduct")
-        const collection: Collection <User> = db.collection<User>('users')
+
+        const collection: Collection<User> = await connectToDatabase<User>("users")
         const filter = {_id: index}
-    
         const result: DeleteResult = await collection.deleteOne(filter)
         if (!result.acknowledged) {
             console.log("Did not find a matching dokument");

@@ -1,6 +1,7 @@
 import { Collection, Db, FindCursor, MongoClient, ObjectId, WithId } from "mongodb";
 import { Cart } from "../../Interfaces/cart.js";
 import { con } from "../../server.js";
+import { connectToDatabase } from "../connection.js";
 
 
 
@@ -12,8 +13,7 @@ export async function getOneCart(id: ObjectId): Promise<WithId<Cart>[]> {
     }
         const client: MongoClient = new MongoClient(con)
         try {
-            const db : Db = await client.db("flowerProduct")
-            const collection: Collection <Cart> = db.collection<Cart>('carts')
+            const collection: Collection<Cart> = await connectToDatabase<Cart>("carts")
     
             const filter = {_id: id}
             const cursor: FindCursor <WithId<Cart>> = collection.find(filter)

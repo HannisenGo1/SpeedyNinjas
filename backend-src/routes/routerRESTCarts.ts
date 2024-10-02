@@ -7,6 +7,7 @@ import { deleteCart } from '../mongoDB-src/Carts/deleteCart.js'
 import { updateCart } from '../mongoDB-src/Carts/updateCart.js' 
 import { getOneCart } from '../mongoDB-src/Carts/getOneCart.js'
 import { isValidCart, isValidFlower, isValidUser } from '../data/validation.js'
+import { createCarts } from '../mongoDB-src/Carts/createCarts.js'
 
 export const router: Router = express.Router()
 
@@ -46,6 +47,7 @@ router.post('/', async (req: Request, res: Response) => {
   const newCart: Cart = req.body
   if (isValidCart(newCart)){
     await insertCarts(newCart)
+    await createCarts()
     res.sendStatus(201)
   }
   else{
@@ -59,6 +61,7 @@ router.put('/:id', async (req: Request, res: Response) => {
 
   if (!ObjectId.isValid(id)) {
     return res.sendStatus(400)
+    
   }
   const objectId: ObjectId = new ObjectId(id)
 
@@ -67,7 +70,7 @@ router.put('/:id', async (req: Request, res: Response) => {
   if (result?.matchedCount === 0) {
     return res.sendStatus(404)
  }else {
-
+  
   return res.sendStatus(204)
  }
 

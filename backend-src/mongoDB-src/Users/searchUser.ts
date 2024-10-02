@@ -2,6 +2,7 @@ import { Collection, Db, MongoClient, ObjectId, WithId } from "mongodb";
 import { User } from "../../Interfaces/user.js";
 import { con } from "../../server.js";
 import { Response } from "express";
+import { connectToDatabase } from "../connection.js";
 
 export async function searchUser(searchString: string, res: Response): Promise<WithId<User>[] > {
     if (!con) {
@@ -10,8 +11,7 @@ export async function searchUser(searchString: string, res: Response): Promise<W
     }
     const client: MongoClient = new MongoClient(con);
     try {
-        const db: Db = await client.db("flowerProduct");
-        const collection: Collection<User> = db.collection<User>("users");
+        const collection: Collection<User> = await connectToDatabase<User>("users")
         
         const searchterm = searchString.split(" ").map(term => term.trim()).filter(term => term.length > 0)
         const userQueries = searchterm.map(term => ({

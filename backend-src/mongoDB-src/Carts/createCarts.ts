@@ -19,44 +19,37 @@ export async function createCarts(): Promise<WithId<Cart>[]> {
         const collectionFlowers: Collection<Flower> = db.collection<Flower>('flowers')
         const collectionUsers: Collection<User> = db.collection<User>('users')
     
-        const newFlowers = await collectionFlowers.find({}).limit(5).toArray()
-    
+        
         const cursorCart: FindCursor<WithId<Cart>> = collectionCarts.find({})
         const cartList: WithId<Cart>[] = await cursorCart.toArray()
-    
-        newFlowers.forEach(async (flower, index) => {
-            const cart = cartList[index]
-            await collectionCarts.updateOne(
-                { _id: cart._id },
-                { $set: { productId: flower._id } }
-            )
-        }
-        )
+        
+        const newFlowers = await collectionFlowers.find({}).limit(cartList.length).toArray()
         const newUsers = await collectionUsers.find({}).toArray()
-    
-        // newUsers.forEach(async(user, index) => {
-        //     const cart = cartList[index]
-        //     await collectionCarts.updateOne(
-        //         {_id: cart._id},
-        //         {$set: {userId: user._id}}
-        //     )
-        // })
-    
-        let x = 0
-        for (let i = 0; i < newUsers.length + 2 ; i++) {
-            const cart = cartList[i]
-            if (x >= 3) {
-                x = 0
-            }
-            console.log(cart._id);
-            console.log(newUsers[x])
-    
-            await collectionCarts.updateOne(
-                { _id: cart._id },
-                { $set: { userId: newUsers[x]._id } }
-            )
-            x++
-        }
+        
+                newFlowers.forEach(async (flower, index) => {
+                    const cart = cartList[index]
+                    await collectionCarts.updateOne(
+                        { _id: cart._id },
+                        { $set: { productId: flower._id } }
+                    )
+                }
+                ) 
+                let x = 0
+                for (let i = 0; i < cartList.length ; i++) {
+                    const cart = cartList[i]
+                    if (x >= newUsers.length) {
+                        x = 0
+                    }
+                    console.log(cart._id);
+                    console.log(newUsers[x])
+                    
+                    await collectionCarts.updateOne(
+                        { _id: cart._id },
+                        { $set: { userId: newUsers[x]._id } }
+                    )
+                    x++
+                }
+
     
         return cartList
     }catch (error) {

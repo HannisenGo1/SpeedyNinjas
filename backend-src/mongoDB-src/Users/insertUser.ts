@@ -1,6 +1,7 @@
 import { Collection, Db, InsertOneResult, MongoClient, ObjectId } from "mongodb";
 import { User } from "../../Interfaces/user.js";
 import { con } from "../../server.js";
+import { connectToDatabase } from "../connection.js";
 
 
 
@@ -13,8 +14,7 @@ export async function insertUser(user: User) : Promise<ObjectId | null>{
     }
     const client: MongoClient = new MongoClient(con)
     try {
-        const db : Db = await client.db("flowerProduct")
-        const collection: Collection <User> = db.collection<User>('users')
+        const collection: Collection<User> = await connectToDatabase<User>("users")
     
         const result: InsertOneResult<User> = await collection.insertOne(user)
     

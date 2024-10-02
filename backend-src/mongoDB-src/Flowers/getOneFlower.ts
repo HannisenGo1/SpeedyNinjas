@@ -1,6 +1,7 @@
 import { Collection, Db, FindCursor, MongoClient, ObjectId, WithId } from "mongodb";
 import { Flower } from "../../Interfaces/product.js";
 import { con } from "../../server.js";
+import { connectToDatabase } from "../connection.js";
 
 
 export async function getOneFlower(id: ObjectId): Promise<WithId<Flower>[]> {
@@ -13,9 +14,9 @@ export async function getOneFlower(id: ObjectId): Promise<WithId<Flower>[]> {
     }
         const client: MongoClient = new MongoClient(con)
         try {
-            const db : Db = await client.db("flowerProduct")
-            const collection: Collection <Flower> = db.collection<Flower>('flowers')
-    
+            // const db : Db = await client.db("flowerProduct")
+            // const collection: Collection <Flower> = db.collection<Flower>('flowers')
+            const collection: Collection<Flower> = await connectToDatabase<Flower>("flowers")
             const filter = {_id: id}
             const cursor: FindCursor <WithId<Flower>> = collection.find(filter)
             const found: WithId<Flower>[] = await cursor.toArray()
