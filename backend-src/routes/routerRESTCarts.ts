@@ -61,7 +61,6 @@ router.put('/:id', async (req: Request, res: Response) => {
 
   if (!ObjectId.isValid(id)) {
     return res.sendStatus(400)
-    
   }
   const objectId: ObjectId = new ObjectId(id)
 
@@ -83,9 +82,12 @@ res.sendStatus(500)
 router.delete("/:id", async (req: Request, res: Response) => {
   try {
   const id: string = req.params.id
+  if (!ObjectId.isValid(id)) {
+    return res.sendStatus(400)
+  }
   const objectId: ObjectId = new ObjectId(id)
-  await deleteCart(objectId)
-    if(!deleteCart) {
+  const result = await deleteCart(objectId)
+    if(result?.deletedCount === 0) {
       return res.sendStatus(404)
     }
      res.sendStatus(204)

@@ -1,33 +1,34 @@
 import { Collection, Db, DeleteResult, MongoClient, ObjectId } from "mongodb";
 import { User } from "../../Interfaces/user.js";
-import { con } from '../../server.js'
 import { connectToDatabase } from "../connection.js";
+import { ClientType } from "../../Interfaces/ClientType.js";
+
+type UserDocument = User & Document; 
+let x: ClientType<UserDocument> 
 
 export async function deleteUser(index: ObjectId) {
-    if(!con) {
-        console.log("Error: connection string not found");
-        throw new Error("No connection!")
-    }
+ 
     
-    const client: MongoClient = new MongoClient(con)
     try {
 
-        const collection: Collection<User> = await connectToDatabase<User>("users")
+        x = await connectToDatabase<UserDocument>("users")
         const filter = {_id: index}
-        const result: DeleteResult = await collection.deleteOne(filter)
+        const result: DeleteResult = await x.collection.deleteOne(filter)
         if (!result.acknowledged) {
             console.log("Did not find a matching dokument");
             return
             
         } 
         console.log(`deleted: ${result.deletedCount}`);
-
+        return result
     }catch (error) {
         console.error('Error fetching Users', error);
         throw error;
     }finally {
-        await client.close()
+        if(x) {
+            await x.client.close()
 
+        }
     }
     
 }

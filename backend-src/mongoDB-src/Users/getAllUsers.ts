@@ -1,21 +1,19 @@
 import { Collection, Db, FindCursor, MongoClient, WithId } from "mongodb";
 import { User } from "../../Interfaces/user.js"; 
-import { con } from "../../server.js"; 
 import { connectToDatabase } from "../connection.js";
+import { ClientType } from "../../Interfaces/ClientType.js";
+
+type UserDocument = User & Document; 
+let x: ClientType<UserDocument> 
+
 
 export async function getAllUsers(): Promise<WithId<User>[]> {
 
-    // const con: string | undefined = process.env.CONNECTION_STRING
-    if(!con) {
-        console.log("Error: connection string not found");
-        throw new Error("No connection!")
-    }
-        const client: MongoClient = new MongoClient(con)
         try {
 
-            const collection: Collection<User> = await connectToDatabase<User>("users")
+            x = await connectToDatabase<UserDocument>("users")
     
-            const cursor: FindCursor <WithId<User>> = collection.find({})
+            const cursor: FindCursor <WithId<User>> = x.collection.find({})
             const found: WithId<User>[] = await cursor.toArray()
             
             if(found.length < 1) {
@@ -27,7 +25,9 @@ export async function getAllUsers(): Promise<WithId<User>[]> {
             console.error('Error fetching Users', error);
             throw error;
         }finally {
-            await client.close()
+            if(x) {
+                await x.client.close()
     
+            }
         }
 }

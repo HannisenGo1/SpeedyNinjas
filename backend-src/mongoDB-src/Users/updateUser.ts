@@ -1,24 +1,19 @@
 import { Collection, Db, DeleteResult, MongoClient, ObjectId, UpdateResult } from "mongodb";
 import { User } from "../../Interfaces/user.js"; 
-import { con } from "../../server.js"; 
 import { connectToDatabase } from "../connection.js";
+import { ClientType } from "../../Interfaces/ClientType.js";
+
+type UserDocument = User & Document; 
+let x: ClientType<UserDocument> 
 
 export async function updateUser(index: ObjectId, body: Object) {
-    if(!con) {
-        console.log("Error: connection string not found");
-        throw new Error("No connection!")
-    }
-    
-    const client: MongoClient = new MongoClient(con)
     try {
-
-
-        const collection: Collection<User> = await connectToDatabase<User>("users")
+        x = await connectToDatabase<UserDocument>("users")
         const filter = {_id: index}
     
-        const result: UpdateResult<User>  = await collection.updateOne(filter, {$set: body })
+        const result: UpdateResult<User>  = await x.collection.updateOne(filter, {$set: body })
         if (!result.acknowledged) {
-            console.log("Did not find a matching dokument");
+            console.log("Did not find a matching document");
             return
         } 
         console.log(`deleted: ${result.upsertedCount}`);
@@ -27,8 +22,10 @@ export async function updateUser(index: ObjectId, body: Object) {
         console.error('Error fetching Users', error);
         throw error;
     }finally {
-        await client.close()
+        if(x) {
+            await x.client.close()
 
+        }
     }
 
 

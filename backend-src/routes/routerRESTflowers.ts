@@ -108,11 +108,14 @@ router.put("/:id", async (req: Request, res: Response) => {
 router.delete("/:id", async (req: Request, res: Response) => {
   try{
    const id: string = req.params.id;
+   if (!ObjectId.isValid(id)) {
+    return res.sendStatus(400)
+  }
   const objectId: ObjectId = new ObjectId(id);
 
-  await deleteFlower(objectId);
+  const result = await deleteFlower(objectId);
 
-  if (! deleteFlower) {
+  if (result?.deletedCount === 0) {
     return res.sendStatus(404)
   }
   res.sendStatus(204); 

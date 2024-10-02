@@ -1,28 +1,28 @@
 import { Collection, Db, InsertOneResult, MongoClient, ObjectId } from 'mongodb';
 import { Cart } from '../../Interfaces/cart.js'; 
-import { con } from '../../server.js'; 
 import { connectToDatabase } from '../connection.js';
+import { ClientType } from '../../Interfaces/ClientType.js';
 
+type CartDocument = Cart & Document; 
+let x: ClientType<CartDocument> 
 
 export async function insertCarts(cart: Cart) : Promise<ObjectId | null>{
     
-    // const con: string | undefined = process.env.CONNECTION_STRING
-    if(!con) {
-        console.log("Error: connection string not found");
-        throw new Error("No connection!")
-    }
-    const client: MongoClient = new MongoClient(con)
     try {
-        const collection: Collection<Cart> = await connectToDatabase<Cart>("carts")
+        x = await connectToDatabase<CartDocument>("carts")
     
-        const result: InsertOneResult<Cart> = await collection.insertOne(cart)
+        const result: InsertOneResult<CartDocument> = await x.collection.insertOne(cart as CartDocument)
+    
         return result.insertedId
         
     }catch (error) {
         console.error('Error fetching Carts', error);
         throw error;
     }finally {
-        await client.close()
+        if(x) {
+            await x.client.close()
+
+        }
 
     }
 }

@@ -1,22 +1,18 @@
 import { Collection, Db, InsertOneResult, MongoClient, ObjectId } from "mongodb";
 import { User } from "../../Interfaces/user.js";
-import { con } from "../../server.js";
 import { connectToDatabase } from "../connection.js";
+import { ClientType } from "../../Interfaces/ClientType.js";
 
-
+type UserDocument = User & Document; 
+let x: ClientType<UserDocument>
 
 export async function insertUser(user: User) : Promise<ObjectId | null>{
     
     
-    if(!con) {
-        console.log("Error: connection string not found");
-        throw new Error("No connection!")
-    }
-    const client: MongoClient = new MongoClient(con)
     try {
-        const collection: Collection<User> = await connectToDatabase<User>("users")
+        x = await connectToDatabase<UserDocument>("users")
     
-        const result: InsertOneResult<User> = await collection.insertOne(user)
+        const result: InsertOneResult<User> = await x.collection.insertOne(user as UserDocument)
     
         return result.insertedId
 
@@ -24,7 +20,9 @@ export async function insertUser(user: User) : Promise<ObjectId | null>{
         console.error('Error fetching Users', error);
         throw error;
     }finally {
-        await client.close()
+        if(x) {
+            await x.client.close()
 
+        }
     }
 }

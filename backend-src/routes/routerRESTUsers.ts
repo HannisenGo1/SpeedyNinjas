@@ -115,11 +115,14 @@ router.get('/', async (req:Request, res:Response<WithId<User>[]> ) =>{
 router.delete("/:id", async (req: Request, res: Response) => {
 try {
     const id: string = req.params.id
+    if (!ObjectId.isValid(id)) {
+      return res.sendStatus(400)
+    }
     const objectId: ObjectId = new ObjectId(id)
     
-    await deleteUser(objectId)
+    const result = await deleteUser(objectId)
 
-if (!deleteUser) {
+if (result?.deletedCount === 0) {
 return res.sendStatus(404) 
 }
     res.sendStatus(204)
